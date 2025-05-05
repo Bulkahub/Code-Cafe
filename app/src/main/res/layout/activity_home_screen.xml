@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/blackHomeScreen"
+    android:fitsSystemWindows="true"
+    tools:context=".HomeScreenActivity">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineImageIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.01" />
+
+
+    <ImageView
+        android:id="@+id/imageViewIconCafe"
+        android:layout_width="0dp"
+        android:layout_height="146dp"
+        android:layout_marginEnd="176dp"
+        android:src="@drawable/backicon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/guidelineImageIcon" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidLineImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.61" />
+
+
+    <ImageView
+        android:id="@+id/homeScreen"
+        android:layout_width="0dp"
+        android:layout_height="350dp"
+        android:src="@drawable/backstarted"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/guidLineImage"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.75" />
+
+    <TextView
+        android:id="@+id/textViewPrev"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:lineSpacingExtra="10dp"
+        android:fontFamily="@font/fontbutton2"
+        android:textStyle="bold"
+        android:text=" Coffee so good,\n your taste buds\n     will love it"
+        android:textColor="@color/ColorTextViewPrev"
+        android:textSize="36dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/homeScreen"
+        tools:layout_editor_absoluteY="419dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineTextView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.75" />
+
+    <TextView
+        android:id="@+id/textViewPrev2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:fontFamily="@font/fontprev2"
+        android:scaleX="1.2"
+        android:text="coffe is always a good choice"
+        android:textSize="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/guidelineTextView1" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.87" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/buttonGetStarted"
+        android:layout_width="273dp"
+        android:layout_height="59dp"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="@color/buttonColorGetStart"
+        android:fontFamily="@font/fontprev1"
+        android:text="Let’s get started"
+        android:textSize="27dp"
+        app:cornerRadius="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/guidelineButton"
+        app:layout_constraintVertical_bias="0.5"
+        app:strokeColor="@color/white"
+        app:strokeWidth="1dp" />
+</androidx.constraintlayout.widget.ConstraintLayout>

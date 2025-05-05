@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="blackHomeScreen">#FF000000</color>
+    <color name="ColorTextViewPrev">#FFFFFF</color>
+    <color name="textViewColorOverl">#F5F5F5</color>
+    <color name="buttonColorGetStart">#000000</color>
+    <color name="colorBlackLogin">#000000</color>
+    <color name="edittextBorder">#F5F5F5</color>
+    <color name="buttonColorLogin">#F5F5F5</color>
+    <color name="buttonLogin">#000000</color>
+    <color name="createTextView">#777373</color>
+    <color name="edititextHintColor">#837E7E</color>
+    <color name="colorBlackCreateAcc">#FF000000</color>
+
+</resources>
