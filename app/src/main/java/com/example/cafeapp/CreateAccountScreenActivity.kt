@@ -2,32 +2,72 @@ package com.example.cafeapp
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.databinding.DataBindingUtil
+import com.example.cafeapp.databinding.ActivityCreateAccountScreenBinding
+import com.example.cafeapp.dataclass.User
 import com.google.android.material.button.MaterialButton
+import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.auth
+import com.google.firebase.firestore.FirebaseFirestore
+import java.util.UUID
 
 class CreateAccountScreenActivity : AppCompatActivity() {
 
-    lateinit var buttonCreateAccount: MaterialButton
+    lateinit var binding: ActivityCreateAccountScreenBinding
+
+    private lateinit var auth: FirebaseAuth
+    private lateinit var firestore: FirebaseFirestore
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_create_account_screen)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
+
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_create_account_screen)
+
+
+        firestore = FirebaseFirestore.getInstance()
+
+
+        binding.buttonCreateAccount.setOnClickListener {
+            val userName = binding.createName.text.toString()
+            val password = binding.createPassword.text.toString()
+
+            if (userName.isNotEmpty() && password.isNotEmpty()) {
+                registerUser(userName, password)
+            } else {
+                Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show()
+            }
         }
 
-        buttonCreateAccount = findViewById(R.id.buttonCreateAccount)
-        buttonCreateAccount.setOnClickListener {
-            val intent = Intent(this, LoginScreenActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
+    }
+
+    fun registerUser(userName: String, password: String) {
+        val userId = UUID.randomUUID().toString()
+        val user = User(
+            uid = userId,
+            userName = userName.trim(),
+            password = password.trim(),
+            createdAt = System.currentTimeMillis()
+        )
+
+        firestore.collection("Users").document(userId)
+            .set(user)
+            .addOnSuccessListener {
+                Log.d("Firestore", "User registered")
+
+                // После успешного сохранения пользователя → Переход в `LoginScreenActivity`
+                startActivity(Intent(this, LoginScreenActivity::class.java))
+                finish()
+            }
+            .addOnFailureListener { Log.e("Firestore", "Error save data") }
     }
 }
