@@ -65,7 +65,7 @@ class LoginScreenActivity : AppCompatActivity() {
         }
     }
 
-    //Функция фхода по "UserName"
+    //Функция фхода по "UserName".
     fun loginWithUserName(userName: String, password: String, userRef: CollectionReference) {
         userRef.whereEqualTo("userName", userName).get()
             .addOnSuccessListener { documents ->
@@ -77,7 +77,7 @@ class LoginScreenActivity : AppCompatActivity() {
                     if (storedPassword == password) {
                         Log.d("Firestore", "Login successful! UID: ${user["uid"]}")
 
-                        //Сохраняем данные пользователя,что бы при повторном запуске он был авторизован
+                        //Сохраняем данные пользователя,что бы при повторном запуске он был авторизован.
                         sharedPreferences.edit().putString("loggedInUser", userName).apply()
 
                         //Переход на экран меню.
@@ -95,8 +95,9 @@ class LoginScreenActivity : AppCompatActivity() {
                     Toast.makeText(this, "User not found", Toast.LENGTH_SHORT).show()
                 }
             }
-            .addOnFailureListener { Log.e("Firestore", "Error Data Base") }
-        Toast.makeText(this, "Error Data Base!", Toast.LENGTH_SHORT).show()
+            .addOnFailureListener {
+                Log.e("Firestore", "Error Data Base")
+                Toast.makeText(this, "Error Data Base!", Toast.LENGTH_SHORT).show()
+            }
     }
-
 }
