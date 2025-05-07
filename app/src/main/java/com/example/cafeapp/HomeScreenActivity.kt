@@ -24,6 +24,7 @@ class HomeScreenActivity : AppCompatActivity() {
             insets
         }
 
+        //Обработчик нажатия + Переход на  LoginActivity.
         buttonGetStarted = findViewById(R.id.buttonGetStarted)
         buttonGetStarted.setOnClickListener {
             val intent = Intent(this, LoginScreenActivity::class.java)

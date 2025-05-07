@@ -21,9 +21,10 @@ import java.util.UUID
 
 class CreateAccountScreenActivity : AppCompatActivity() {
 
+    //Привязка к макету.
     lateinit var binding: ActivityCreateAccountScreenBinding
 
-    private lateinit var auth: FirebaseAuth
+    //Firebase Firestore для хранения данных пользователей.
     private lateinit var firestore: FirebaseFirestore
 
 
@@ -31,18 +32,20 @@ class CreateAccountScreenActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
+        //Инициализация привязки к макету.
         binding = DataBindingUtil.setContentView(this, R.layout.activity_create_account_screen)
 
-
+        //Инициализация Firestore.
         firestore = FirebaseFirestore.getInstance()
 
-
+        //Обработчик кнопки "Создать аккаунт".
         binding.buttonCreateAccount.setOnClickListener {
             val userName = binding.createName.text.toString()
             val password = binding.createPassword.text.toString()
 
+            //Проверяем,что все поля не пустые.
             if (userName.isNotEmpty() && password.isNotEmpty()) {
-                registerUser(userName, password)
+                registerUser(userName, password)//Регистрируем пользователя.
             } else {
                 Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show()
             }
@@ -50,8 +53,11 @@ class CreateAccountScreenActivity : AppCompatActivity() {
 
     }
 
+    //Функция регистрации пользователя.
     fun registerUser(userName: String, password: String) {
-        val userId = UUID.randomUUID().toString()
+        val userId = UUID.randomUUID().toString()//Генерируем уникальный "userId"
+
+        //Создаем объект пользователя.
         val user = User(
             uid = userId,
             userName = userName.trim(),
@@ -59,6 +65,7 @@ class CreateAccountScreenActivity : AppCompatActivity() {
             createdAt = System.currentTimeMillis()
         )
 
+        //Сохраняем пользователя в Firestore.
         firestore.collection("Users").document(userId)
             .set(user)
             .addOnSuccessListener {
