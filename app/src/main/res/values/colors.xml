@@ -13,5 +13,14 @@
     <color name="createTextView">#777373</color>
     <color name="edititextHintColor">#837E7E</color>
     <color name="colorBlackCreateAcc">#FF000000</color>
+    <color name="backMenu">#FF000000</color>
+    <color name="colorImageProf">#C0ABAB</color>
+    <color name="colorTextView2">#FFFFFF</color>
+    <color name="colorTextHintSearch">#6D5C5C</color>
+    <color name="colorTextSearch">#837F7F</color>
+    <color name="colorTextViewCoffe">#765C5C</color>
+    <color name="textViewSpecialOffer">#FFFFFF</color>
+    <color name="cardBackColor">#D9D9D9</color>
+    <color name="bottomNavigationcolor">#241414</color>
 
 </resources>

@@ -5,5 +5,22 @@
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
 
+    
+    <!--Закругляем углы изображения Профиль-->
+    <style name="RoundedImageView" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+        <item name="cornerSize">15%</item>
+    </style>
+
+    
+    <!--Цветовая подсказка и цвет текста в Search-->
+    <style name="CustomSearchViewThem" parent="ThemeOverlay.AppCompat.Light">
+        <item name="android:textColor">@color/colorTextSearch</item>
+        <item name="android:textColorHint">@color/colorTextHintSearch</item>
+    </style>
+
+    
+
+
+
     <style name="Theme.CafeApp" parent="Base.Theme.CafeApp" />
 </resources>
