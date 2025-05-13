@@ -53,7 +53,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:lineSpacingExtra="10dp"
-        android:fontFamily="@font/fontbutton2"
+        android:fontFamily="@font/font2"
         android:textStyle="bold"
         android:text=" Coffee so good,\n your taste buds\n     will love it"
         android:textColor="@color/ColorTextViewPrev"
