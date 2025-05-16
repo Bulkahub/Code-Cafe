@@ -1,4 +1,4 @@
-package com.example.cafeapp
+package com.example.cafeapp.activity
 
 import android.content.Intent
 import android.content.SharedPreferences
@@ -9,8 +9,8 @@ import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import com.example.cafeapp.R
 import com.example.cafeapp.databinding.ActivityLoginScreenBinding
-import com.google.firebase.Firebase
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 

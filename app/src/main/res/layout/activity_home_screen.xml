@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/blackHomeScreen"
     android:fitsSystemWindows="true"
-    tools:context=".HomeScreenActivity">
+    tools:context=".activity.HomeScreenActivity">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineImageIcon"
@@ -97,7 +97,7 @@
         android:layout_height="59dp"
         android:layout_marginTop="8dp"
         android:backgroundTint="@color/buttonColorGetStart"
-        android:fontFamily="@font/fontprev1"
+        android:fontFamily="@font/fontprev2"
         android:text="Let’s get started"
         android:textSize="27dp"
         app:cornerRadius="10dp"

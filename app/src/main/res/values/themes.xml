@@ -13,10 +13,17 @@
 
     
     <!--Цветовая подсказка и цвет текста в Search-->
-    <style name="CustomSearchViewThem" parent="ThemeOverlay.AppCompat.Light">
-        <item name="android:textColor">@color/colorTextSearch</item>
+    <style name="CustomSearchViewThem" parent="Widget.AppCompat.SearchView">
+        <item name="android:editTextColor">@color/colorTextSearch</item>
         <item name="android:textColorHint">@color/colorTextHintSearch</item>
     </style>
+
+
+    <!--Убирает наложенный фон на iconItem-->
+    <style name="CustomBottomNavigation" parent="Widget.MaterialComponents.BottomNavigationView.Colored">
+        <item name="android:foreground">@null</item>
+    </style>
+    
 
     
 

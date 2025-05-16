@@ -29,7 +29,7 @@
             android:lineSpacingExtra="5sp"
             android:text=" 5 coffe beans\n for you\n
 Must Try!"
-            android:textColor="@color/black"
+            android:textColor="@color/textColorSspecialOfferTextView"
             android:textSize="20dp"
             android:textStyle="bold" />
 

@@ -1,15 +1,11 @@
-package com.example.cafeapp
+package com.example.cafeapp.activity
 
 import android.os.Bundle
-import android.widget.ImageView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.SearchView
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
+import com.example.cafeapp.R
 import com.example.cafeapp.databinding.ActivityMenuScreenBinding
-import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MenuScreenActivity : AppCompatActivity() {
 
@@ -21,7 +17,7 @@ class MenuScreenActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-        binding = DataBindingUtil.setContentView(this,R.layout.activity_menu_screen)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_menu_screen)
 
 
     }

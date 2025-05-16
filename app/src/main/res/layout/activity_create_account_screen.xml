@@ -13,7 +13,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:background="@color/colorBlackCreateAcc"
-    tools:context=".CreateAccountScreenActivity">
+    tools:context=".activity.CreateAccountScreenActivity">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineImageIcon"

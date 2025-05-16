@@ -13,7 +13,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorBlackLogin"
     android:fitsSystemWindows="true"
-    tools:context=".LoginScreenActivity">
+    tools:context=".activity.LoginScreenActivity">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineImageIcon"
@@ -143,7 +143,7 @@
         android:minHeight="48dp"
         android:paddingEnd="5dp"
         android:scaleX="1.2"
-        android:text="Create  Account  user!"
+        android:text="Create  Account  User!"
         android:textColor="@color/createTextView"
         android:textSize="20dp"
         app:layout_constraintEnd_toEndOf="parent"

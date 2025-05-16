@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/backMenu"
-        tools:context=".MenuScreenActivity">
+        tools:context=".activity.MenuScreenActivity">
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideLineImageView"
@@ -76,15 +76,14 @@
 
         <SearchView
             android:id="@+id/searchView"
-            style="@style/CustomSearchViewThem"
             android:layout_width="338dp"
             android:layout_height="54dp"
             android:layout_marginTop="36dp"
+            android:theme="@style/CustomSearchViewThem"
             android:background="@drawable/searchviewback"
             android:iconifiedByDefault="false"
             android:queryHint="Find your coffe here "
             android:searchIcon="@drawable/search1"
-            android:theme="@style/CustomSearchViewThem"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.494"
             app:layout_constraintStart_toStartOf="parent"
@@ -118,7 +117,7 @@
                     android:layout_marginStart="10dp"
                     android:paddingStart="5dp"
                     android:paddingEnd="10dp"
-                    android:text="cappuccino"
+                    android:text="Cappuccino"
                     android:textColor="@color/colorTextViewCoffe"
                     android:textSize="19dp"
                     android:textStyle="bold" />
@@ -231,15 +230,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/bottomnavigation"
-            app:menu="@menu/bottom_menu"
             app:itemIconSize="32dp"
-            app:labelVisibilityMode="unlabeled"
             app:itemIconTint="@color/item_icon_color"
+            app:labelVisibilityMode="unlabeled"
+            style="@style/CustomBottomNavigation"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintVertical_bias="1.0" />
+            app:menu="@menu/bottom_menu" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
