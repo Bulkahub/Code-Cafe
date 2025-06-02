@@ -2,24 +2,22 @@ package com.example.cafeapp.activity
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProvider
 import com.example.cafeapp.R
 import com.example.cafeapp.databinding.ActivityCreateAccountScreenBinding
-import com.example.cafeapp.dataclass.User
-import com.google.firebase.firestore.FirebaseFirestore
-import java.util.UUID
+import com.example.cafeapp.repository.UsersRepository
+import com.example.cafeapp.view.UserViewModel
+import com.example.cafeapp.view.UserViewModelFactory
 
 class CreateAccountScreenActivity : AppCompatActivity() {
 
-    //Привязка к макету.
-    lateinit var binding: ActivityCreateAccountScreenBinding
+    private lateinit var viewModel: UserViewModel
 
-    //Firebase Firestore для хранения данных пользователей.
-    private lateinit var firestore: FirebaseFirestore
+    lateinit var binding: ActivityCreateAccountScreenBinding
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,8 +27,11 @@ class CreateAccountScreenActivity : AppCompatActivity() {
         //Инициализация привязки к макету.
         binding = DataBindingUtil.setContentView(this, R.layout.activity_create_account_screen)
 
-        //Инициализация Firestore.
-        firestore = FirebaseFirestore.getInstance()
+        val userRepository = UsersRepository(applicationContext)
+        val factory = UserViewModelFactory(userRepository)
+
+
+        viewModel = ViewModelProvider(this, factory)[UserViewModel::class.java]
 
         //Обработчик кнопки "Создать аккаунт".
         binding.buttonCreateAccount.setOnClickListener {
@@ -39,36 +40,21 @@ class CreateAccountScreenActivity : AppCompatActivity() {
 
             //Проверяем,что все поля не пустые.
             if (userName.isNotEmpty() && password.isNotEmpty()) {
-                registerUser(userName, password)//Регистрируем пользователя.
+                viewModel.registerUser(userName, password)//Регистрируем пользователя.
             } else {
                 Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show()
             }
         }
 
-    }
-
-    //Функция регистрации пользователя.
-    fun registerUser(userName: String, password: String) {
-        val userId = UUID.randomUUID().toString()//Генерируем уникальный "userId"
-
-        //Создаем объект пользователя.
-        val user = User(
-            uid = userId,
-            userName = userName.trim(),
-            password = password.trim(),
-            createdAt = System.currentTimeMillis()
-        )
-
-        //Сохраняем пользователя в Firestore.
-        firestore.collection("Users").document(userId)
-            .set(user)
-            .addOnSuccessListener {
-                Log.d("Firestore", "User registered")
-
-                // После успешного сохранения пользователя → Переход в `LoginScreenActivity`
+        viewModel.registrationStatus.observe(this) { success ->
+            if (success) {
                 startActivity(Intent(this, LoginScreenActivity::class.java))
                 finish()
+            } else {
+                Toast.makeText(this, "Registration Failed", Toast.LENGTH_SHORT).show()
             }
-            .addOnFailureListener { Log.e("Firestore", "Error save data") }
+        }
+
     }
+
 }

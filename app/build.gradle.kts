@@ -2,6 +2,8 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     id("com.google.gms.google-services")
+    id ("org.jetbrains.kotlin.kapt")
+
 }
 
 android {
@@ -63,6 +65,20 @@ dependencies {
 
     //RealTime
     implementation(libs.firebase.database)
+
+
+    //lifecycle
+    implementation(libs.androidx.viewmodel)
+    implementation(libs.androidx.livedata)
+    implementation(libs.androidx.anotationkapt)
+
+
+    //Json
+    implementation(libs.androidx.json)
+
+
+    //Coroutines
+    implementation(libs.androidx.coroutines)
 
 
     //Test
