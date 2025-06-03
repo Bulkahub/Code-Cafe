@@ -83,6 +83,10 @@ class CoffeAdapter(
 
             binding.imageViewAdd.setOnClickListener {
                 val intent = Intent(itemView.context, CoffeItemActivity::class.java)
+                intent.putExtra("COFFE_NAME",item.name)
+                intent.putExtra("COFFE_IMAGE",item.imageRecId)
+                intent.putExtra("COFFE_DESCRIPTION",item.description)
+
 
                 itemView.context.startActivity(intent)
                 onAddClick(item)
