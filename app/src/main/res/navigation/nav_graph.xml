@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/cartFragment">
+
+
+
+
+    <fragment
+        android:id="@+id/cartFragment"
+        android:name="com.example.cafeapp.fragment.CartFragment"
+        android:label="Cart"
+        tools:layout="@layout/fragment_cart">
+        <argument
+            android:name="coffeName"
+            app:argType="string" />
+        <argument
+            android:name="coffeSize"
+            app:argType="string" />
+        <argument
+            android:name="coffePrice"
+            app:argType="string" />
+        <argument
+            android:name="coffeImage"
+            app:argType="integer"
+            android:defaultValue="-1"/>
+        <action
+            android:id="@+id/action_cartFragment_to_nav_favorites"
+            app:destination="@id/nav_favorites" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_favorites"
+        android:name="com.example.cafeapp.fragment.FavoriteCofffe"
+        android:label="Favorites"/>
+</navigation>

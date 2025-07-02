@@ -30,6 +30,7 @@
     <color name="textColorSspecialOfferTextView">#FF000000</color>
     <color name="textColorItemCoffeTextView">#FF000000</color>
     <color name="textSizeColor">#FFFFFF</color>
+    <color name="backColorFragmentCart">#21120b</color>
 
 
 </resources>

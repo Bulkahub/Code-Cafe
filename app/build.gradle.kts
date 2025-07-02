@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.androidx.navigation.safeargs)
+    id("kotlin-parcelize")
     id("com.google.gms.google-services")
     id ("org.jetbrains.kotlin.kapt")
 
@@ -40,6 +42,10 @@ android {
     buildFeatures{
         dataBinding = true
     }
+
+    viewBinding{
+        enable = true
+    }
 }
 
 dependencies {
@@ -51,7 +57,7 @@ dependencies {
     implementation(libs.androidx.constraintlayout)
 
     //Firebase
-    implementation(platform("com.google.firebase:firebase-bom:33.13.0"))
+    implementation(platform("com.google.firebase:firebase-bom:33.14.0"))
     implementation("com.google.firebase:firebase-analytics")
 
     //Firebase Auth
@@ -79,6 +85,12 @@ dependencies {
 
     //Coroutines
     implementation(libs.androidx.coroutines)
+
+
+    //Navigation JetPack
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.navigation.ui.ktx)
+    implementation("androidx.fragment:fragment-ktx:1.6.2")
 
 
     //Test
