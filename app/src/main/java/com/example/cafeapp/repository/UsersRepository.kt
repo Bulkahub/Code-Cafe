@@ -52,11 +52,9 @@ class UsersRepository(private val context: Context) {
             .addOnSuccessListener {
                 // Успешная регистрация — сохраняем ID в SharedPreferences.
                 sharedPreferences.edit().putString("loggedInUser", userId).apply()
-                Log.d("Firestore Debug", "User registered: '$userId'")
                 callback(true, "Account created successfully")
             }
             .addOnFailureListener { e ->
-                Log.e("Firestore", "Error creating account: ${e.message}")
                 callback(false, "Error creating account")
             }
     }
@@ -88,10 +86,6 @@ class UsersRepository(private val context: Context) {
 
                     if (storedPassword == password) {
                         sharedPreferences.edit().putString("loggedInUser", userId).apply()
-                        Log.d(
-                            "Firestore Debug",
-                            "User logged in: '$userId'"
-                        ) // 🔥 Логируем `userId`
                         callback(true, "Login successful")
                     } else {
                         callback(false, "Incorrect password")
@@ -101,7 +95,6 @@ class UsersRepository(private val context: Context) {
                 }
             }
             .addOnFailureListener { e ->
-                Log.e("Firestore", "DataBase error: ${e.message}")
                 callback(false, "DataBase Error")
             }
     }

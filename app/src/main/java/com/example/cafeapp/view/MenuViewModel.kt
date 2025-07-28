@@ -104,7 +104,7 @@ class MenuViewModel(application: Application) : AndroidViewModel(application) {
                     "With Oat Milk",
                     "5$",
                     R.drawable.macchiatoimage2,
-                    "A macchiato is a double espresso shot, which is topped with a\nsmall amount of milk foam. The dark espresso is ‘dotted’ with\nlight coloured foam, which is formed when milk is intensely steamed."
+                    "A macchiato is a double espresso shot, which is topped with\nasmall amount of milk foam. The dark espresso is ‘dotted’\n with light coloured foam, which is formed when milk is intensely steamed."
                 ),
                 CoffeItem(
                     "Americano",

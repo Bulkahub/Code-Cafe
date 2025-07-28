@@ -4,13 +4,15 @@ plugins {
     alias(libs.plugins.androidx.navigation.safeargs)
     id("kotlin-parcelize")
     id("com.google.gms.google-services")
-    id ("org.jetbrains.kotlin.kapt")
-
+    id("org.jetbrains.kotlin.kapt")
+    id("com.google.dagger.hilt.android")
+    kotlin("plugin.serialization")
 }
+
 
 android {
     namespace = "com.example.cafeapp"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.example.cafeapp"
@@ -39,13 +41,18 @@ android {
         jvmTarget = "11"
     }
 
-    buildFeatures{
+    buildFeatures {
         dataBinding = true
     }
 
-    viewBinding{
+    viewBinding {
         enable = true
     }
+
+    kapt{
+        correctErrorTypes = true
+    }
+
 }
 
 dependencies {
@@ -57,7 +64,7 @@ dependencies {
     implementation(libs.androidx.constraintlayout)
 
     //Firebase
-    implementation(platform("com.google.firebase:firebase-bom:33.14.0"))
+    implementation(platform("com.google.firebase:firebase-bom:33.16.0"))
     implementation("com.google.firebase:firebase-analytics")
 
     //Firebase Auth
@@ -81,6 +88,8 @@ dependencies {
 
     //Json
     implementation(libs.androidx.json)
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.9.0")
+
 
 
     //Coroutines
@@ -90,7 +99,16 @@ dependencies {
     //Navigation JetPack
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
-    implementation("androidx.fragment:fragment-ktx:1.6.2")
+    implementation("androidx.fragment:fragment-ktx:1.8.8")
+
+
+    //Hilt
+    implementation("com.google.dagger:hilt-android:2.56.2")
+    kapt("com.google.dagger:hilt-compiler:2.56.2")
+
+
+    //DataStore
+    implementation(libs.androidx.datastore.preferences)
 
 
     //Test

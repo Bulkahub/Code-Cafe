@@ -68,8 +68,6 @@ class CoffeAdapter(
             binding.textViewCofeeName.text = item.name
             binding.textViewCofFeMilk.text = item.milkType
             binding.textViewPrice.text = item.price
-
-
             binding.imageViewCoffe.setImageResource(item.imageRecId)
 
             // Меняем прозрачность кнопки добавления, если уже в корзине.

@@ -9,7 +9,7 @@ import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-// Репозиторий для загрузки списка напитков и управления их кэшированием через SharedPreference.
+/** Репозиторий для загрузки списка напитков и управления их кэшированием через SharedPreference.*/
 class CoffeRepository(private val context: Context) {
 
     // Локальное хранилище для кэширования списка напитков.
@@ -18,8 +18,7 @@ class CoffeRepository(private val context: Context) {
 
 
     /**
-     * Загружает список напитков из статического источника (эмуляция Firebase) и возвращает его через колбэк.
-     */
+     * Загружает список напитков из статического источника (эмуляция Firebase) и возвращает его через колбэк.*/
     fun getCoffeList(callback: (List<CoffeItem>) -> Unit) {
         val coffeList = listOf(
             CoffeItem(

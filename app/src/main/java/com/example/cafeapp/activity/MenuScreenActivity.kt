@@ -6,25 +6,28 @@ import android.util.Log
 import android.view.View
 import android.widget.SearchView
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.cafeapp.R
 import com.example.cafeapp.adapter.CoffeAdapter
 import com.example.cafeapp.databinding.ActivityMenuScreenBinding
-import com.example.cafeapp.dataclass.CartItem
 import com.example.cafeapp.dataclass.CoffeItem
 import com.example.cafeapp.navigationkeys.NavigationKeys
 import com.example.cafeapp.view.CartViewModel
 import com.example.cafeapp.view.MenuViewModel
+import com.example.cafeapp.view.NotificationViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import kotlin.jvm.java
 
 // Главный экран приложения с меню кофе и спецпредложениями.
+@AndroidEntryPoint
 class MenuScreenActivity : AppCompatActivity() {
 
     // ViewBinding для доступа к UI-элементам.
@@ -34,7 +37,10 @@ class MenuScreenActivity : AppCompatActivity() {
     private lateinit var viewModel: MenuViewModel
 
     // ViewModel для управления корзиной.
-    private lateinit var cartViewModel: CartViewModel
+    private val cartViewModel: CartViewModel by viewModels()
+
+    // ViewModel для управления уведомлениями.
+    private val notificationViewModel: NotificationViewModel by viewModels()
 
     // Адаптер для основного списка кофе.
     private lateinit var adapter: CoffeAdapter
@@ -50,7 +56,7 @@ class MenuScreenActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_menu_screen)
 
         // Инициализируем ViewModels.
-        cartViewModel = ViewModelProvider(this)[CartViewModel::class.java]
+        //cartViewModel = ViewModelProvider(this)[CartViewModel::class.java]
         viewModel = ViewModelProvider(this)[MenuViewModel::class.java]
 
         // Настраиваем навигацию с помощью BottomNavigationView + NavController.
@@ -97,17 +103,11 @@ class MenuScreenActivity : AppCompatActivity() {
         // Загружаем данные и подписываемся на изменения.
         viewModel.loadCoffeList()
         viewModel.filteredList.observe(this) { fullList ->
-            if (fullList.size == 2) {
-                // Обновляем основной список.
-                adapter.updateData(fullList.toMutableList())
-            } else {
-                // Не отображаем, если список неполный.
-                Log.e("DEBUG", "Ошибка! В списке только один элемент. Не обновляем `RecyclerView`.")
-            }
+            adapter.updateData(fullList.toMutableList())
             binding.recyclerViewCoffeItem.visibility = View.VISIBLE
 
         }
-
+        // Наблюдаем за списком спецпредложений.
         viewModel.specialOfferList.observe(this) { specialOffers ->
             adapterSpecialOffer.updateData(specialOffers.toMutableList())
             binding.recyclerViewSpecialOffer.visibility = View.VISIBLE
@@ -123,7 +123,7 @@ class MenuScreenActivity : AppCompatActivity() {
         binding.hotChocolateTextView.setOnClickListener { viewModel.showCoffeType("Hot Chocolate") }
 
 
-        // Обработка поиска по названию.
+        // Обработка поиска по названию кофе.
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 query?.let { viewModel.filterCoffe(it) }
@@ -140,8 +140,8 @@ class MenuScreenActivity : AppCompatActivity() {
         binding.bottomNavigationView.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.nav_home -> {
-                    val intent = Intent(this, MenuScreenActivity::class.java)
-                    startActivity(intent)
+                    val navController = Navigation.findNavController(this, R.id.nav_host_fragment)
+                    navController.navigate(R.id.homeFragment)
                     true
                 }
 
@@ -153,31 +153,59 @@ class MenuScreenActivity : AppCompatActivity() {
                     true
                 }
 
+                R.id.nav_favorites -> {
+                    // Переход к экрану избранного.
+                    binding.navHostFragment.visibility = View.VISIBLE
+                    val navController = Navigation.findNavController(this, R.id.nav_host_fragment)
+                    navController.navigate(R.id.nav_favorites)
+                    true
+                }
+
+                R.id.nav_notification -> {
+                    // Переход к экрану уведомлений.
+                    binding.navHostFragment.visibility = View.VISIBLE
+                    val navController = Navigation.findNavController(this, R.id.nav_host_fragment)
+                    navController.navigate(R.id.nav_notification)
+                    true
+                }
+
                 else -> false
+            }
+        }
+
+        // Отслеживаем количество товаров в корзине и отображаем бейдж на иконке.
+        lifecycleScope.launchWhenStarted {
+            cartViewModel.cartSize.collect { size ->
+                val badge = binding.bottomNavigationView.getOrCreateBadge(R.id.nav_cart)
+                badge.isVisible = size > 0
+                badge.number = size
+            }
+        }
+
+        // Отслеживаем количество избранных и обновляем бейдж.
+        lifecycleScope.launchWhenStarted {
+            cartViewModel.favoriteCount.collect { countFav ->
+                val badgeFav = binding.bottomNavigationView.getOrCreateBadge(R.id.nav_favorites)
+                badgeFav.isVisible = countFav > 0
+                badgeFav.number = countFav
+            }
+        }
+
+        // Отслеживаем количество непрочитанных уведомлений.
+        lifecycleScope.launchWhenStarted {
+            notificationViewModel.unreadCount.collect { countNotif ->
+                val badgeNotif =
+                    binding.bottomNavigationView.getOrCreateBadge(R.id.nav_notification)
+                badgeNotif.isVisible = countNotif > 0
+                badgeNotif.number = countNotif
+                badgeNotif.maxCharacterCount = 4
             }
         }
     }
 
-    // Проверяем, переданы ли данные о товаре — и добавляем его в корзину.
+    // Метод onResume оставлен пустым — можно использовать для обновлений при возврате к экрану.
     override fun onResume() {
         super.onResume()
-
-        if (intent.getBooleanExtra(NavigationKeys.OPEN_CART, false)) {
-            val name = intent.getStringExtra(NavigationKeys.NAME) ?: return
-            val size = intent.getStringExtra(NavigationKeys.SIZE) ?: "Unknown"
-            val price = intent.getStringExtra(NavigationKeys.PRICE) ?: "Price not set"
-            val image = intent.getIntExtra(NavigationKeys.IMAGE, -1)
-
-            val item = CartItem(name, size, price, image)
-            cartViewModel.addToCart(item)
-
-            // Переход в корзину.
-            findNavController(R.id.nav_host_fragment).navigate(R.id.cartFragment)
-
-            // Убираем флаг, чтобы не повторно не триггерить добавление.
-            intent.removeExtra(NavigationKeys.OPEN_CART)
-        }
     }
-
 }
 

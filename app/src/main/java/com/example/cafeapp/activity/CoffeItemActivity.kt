@@ -4,17 +4,31 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import com.example.cafeapp.databinding.ActivityCoffeItemActvityBinding
+import com.example.cafeapp.dataclass.CartItem
+import com.example.cafeapp.dataclass.NotificationData
 import com.example.cafeapp.navigationkeys.NavigationKeys
 import com.example.cafeapp.view.CartViewModel
+import com.example.cafeapp.view.NotificationViewModel
+import dagger.hilt.android.AndroidEntryPoint
+import java.util.UUID
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 //Экран с подробным описанием выбраноного кофе и выбором его размера.
+@AndroidEntryPoint
 class CoffeItemActivity : AppCompatActivity() {
+    // Переменная для блокировки повторных нажатий на кнопку выбора.
+    private var buttonClicked = false
 
     // ViewModel для взаимодействия с корзиной
-    private lateinit var cartViewModel: CartViewModel
+    private val cartViewModel: CartViewModel by viewModels()
+
+    // ViewModel для управления уведомлениями.
+    private val notificationViewModel: NotificationViewModel by viewModels()
 
     // ViewBinding для доступа к UI-элементам
     private lateinit var binding: ActivityCoffeItemActvityBinding
@@ -32,8 +46,8 @@ class CoffeItemActivity : AppCompatActivity() {
         binding = ActivityCoffeItemActvityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Получаем ViewModel для работы с корзиной.
-        cartViewModel = ViewModelProvider(this)[CartViewModel::class.java]
+        // Получаем название кофе из Intent. Есть лишний вызов, но он будет переопределён ниже.
+        coffeName = intent.getStringExtra("coffee_name") ?: "No name"
 
         // Извлекаем данные о кофе из Intent.
         coffeName = intent.getStringExtra(NavigationKeys.NAME)
@@ -45,45 +59,52 @@ class CoffeItemActivity : AppCompatActivity() {
         binding.thoughtsTextViewDescription.text = coffeDescription
         binding.textViewCardViewCoffeItem.text = coffeName
 
-        // Блокируем повторное нажатие, чтобы избежать дублирования в корзине.
-        var buttonClicked = false
 
         // Обработка выбора размера кофе.
-        binding.materialButtonS.setOnClickListener {
-            if (!buttonClicked) {
-                buttonClicked = true
-                addToCartWithSize("S")
-            }
-        }
-        binding.materialButtonM.setOnClickListener {
-            if (!buttonClicked) {
-                buttonClicked = true
-                addToCartWithSize("M")
-            }
-        }
-        binding.materialButtonL.setOnClickListener {
-            if (!buttonClicked) {
-                buttonClicked = true
-                addToCartWithSize("L")
-            }
-        }
+        binding.materialButtonS.setOnClickListener { handleSelection("S") }
+        binding.materialButtonM.setOnClickListener { handleSelection("M") }
+        binding.materialButtonL.setOnClickListener { handleSelection("L") }
     }
 
-    // Передаёт выбранный кофе и размер обратно в меню и открывает корзину.
-    fun addToCartWithSize(selectedSize: String) {
-        val name = coffeName ?: return
-        val price = coffeePrice
-        val image = coffeImage
+    // Создаёт объект CartItem с выбранным размером и переданными параметрами.
+    private fun makeCartItem(size: String): CartItem {
+        return CartItem(
+            id = UUID.randomUUID().toString(),
+            size = size,
+            quantity = 1,
+            image = coffeImage,
+            price = coffeePrice,
+            name = coffeName ?: "Unknown"
+        )
+    }
 
-        // Формируем Intent и передаём выбранные параметры.
-        val intent = Intent(this, MenuScreenActivity::class.java).apply {
-            putExtra(NavigationKeys.OPEN_CART, true)
-            putExtra(NavigationKeys.NAME, name)
-            putExtra(NavigationKeys.SIZE, selectedSize) // 💥 вот он — размер
-            putExtra(NavigationKeys.PRICE, price)
-            putExtra(NavigationKeys.IMAGE, image)
+    // Обрабатывает выбор размера кофе: добавляет в корзину, создаёт уведомление и закрывает экран.
+    private fun handleSelection(size: String) {
+        if (buttonClicked) return
+        buttonClicked = true
+
+        val item = makeCartItem(size)
+        notificationViewModel.notifyNow(
+            "Ваш кофе размера $size готовится!",
+            NotificationData.Type.INFO
+        )
+        notificationViewModel.notifyLater(
+            "Ваш кофе готов! Заберите у бариста.", delayMillis = 10000,
+            NotificationData.Type.SUCCESS
+        )
+
+        // Добавляем товар в корзину и переходим обратно на главный экран.
+        lifecycleScope.launch {
+            cartViewModel.addToCart(item)
+            delay(150)
+
+            // Переход на MenuScreenActivity с флагом открытия корзины.
+            val intent = Intent(this@CoffeItemActivity, MenuScreenActivity::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+                putExtra("open_cart", true)
+            }
+            startActivity(intent)
+            finish()
         }
-        startActivity(intent)
-        finish()
     }
 }

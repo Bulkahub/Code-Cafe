@@ -31,6 +31,8 @@
     <color name="textColorItemCoffeTextView">#FF000000</color>
     <color name="textSizeColor">#FFFFFF</color>
     <color name="backColorFragmentCart">#21120b</color>
+    <color name="colorTextNotification">#C2B7AF</color>
+    <color name="colorCardNotif">#66220B</color>
 
 
 </resources>

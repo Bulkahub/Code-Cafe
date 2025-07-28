@@ -18,7 +18,7 @@
 
 <item
     android:id="@+id/nav_notification"
-    android:icon="@drawable/notificationmenu"
+    android:icon="@drawable/notificationmenu2"
     android:title="Notification" />
 
 </menu>

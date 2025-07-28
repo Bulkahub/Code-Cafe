@@ -6,8 +6,6 @@
     app:startDestination="@id/cartFragment">
 
 
-
-
     <fragment
         android:id="@+id/cartFragment"
         android:name="com.example.cafeapp.fragment.CartFragment"
@@ -32,7 +30,20 @@
     </fragment>
 
     <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.cafeapp.fragment.HomeFragment"
+        android:label="Home"
+        tools:layout="@layout/fragment_home"/>
+
+    <fragment
         android:id="@+id/nav_favorites"
-        android:name="com.example.cafeapp.fragment.FavoriteCofffe"
-        android:label="Favorites"/>
+        android:name="com.example.cafeapp.fragment.FavoriteFragment"
+        android:label="Favorites"
+        tools:layout="@layout/fragment_favorite_cofffe"/>
+
+    <fragment
+        android:id="@+id/nav_notification"
+        android:name="com.example.cafeapp.fragment.NotificationFragment"
+        android:label="Notification"
+        tools:layout="@layout/notification_fragment"/>
 </navigation>
