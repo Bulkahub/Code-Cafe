@@ -48,6 +48,13 @@ android {
     viewBinding {
         enable = true
     }
+    sourceSets {
+        getByName("main") {
+            assets {
+                srcDirs("src\\main\\assets", "src\\main\\assets")
+            }
+        }
+    }
 
     kapt{
         correctErrorTypes = true
@@ -103,12 +110,16 @@ dependencies {
 
 
     //Hilt
-    implementation("com.google.dagger:hilt-android:2.56.2")
-    kapt("com.google.dagger:hilt-compiler:2.56.2")
+    implementation("com.google.dagger:hilt-android:2.57")
+    kapt("com.google.dagger:hilt-compiler:2.57")
 
 
     //DataStore
     implementation(libs.androidx.datastore.preferences)
+
+
+    //LottieAnimation
+    implementation("com.airbnb.android:lottie:6.6.7")
 
 
     //Test

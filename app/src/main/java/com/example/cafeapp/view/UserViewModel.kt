@@ -4,7 +4,9 @@ package com.example.cafeapp.view
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.cafeapp.authmanager.AuthManager
 import com.example.cafeapp.repository.UsersRepository
+import kotlin.math.PI
 
 /**ViewModel следит за статусом входа
  * Связывает UI с UsersRepository и предоставляет LiveData для отслеживания**/
@@ -22,16 +24,31 @@ class UserViewModel(private val userRepository: UsersRepository) : ViewModel() {
     private val _errorMessage = MutableLiveData<String>()
     val errorMessage: LiveData<String> get() = _errorMessage
 
+    //Id текущего пользователя.Если вход выполнен успешно.
+    var currentUserId: String? = null
+        private set
+
 
     /**
      * Вызывает вход пользователя через репозиторий.
      * При неудаче устанавливает сообщение ошибки.
      */
     fun login(userName: String, password: String) {
-        userRepository.login(userName, password) { success, message ->
+        userRepository.login(userName, password) { success, userId ->
             _loginStatus.value = success
-            if (!success) _errorMessage.value = message
+            if (success && userId != null) {
+                currentUserId = userId
+                _loginStatus.value = true
+            } else {
+                _errorMessage.value = "Login Error"
+                _loginStatus.value = false
+            }
         }
+    }
+
+    //Возвращает Id текущего пользователя.
+    fun getUserId(): String? {
+        return currentUserId
     }
 
     /**

@@ -54,7 +54,5 @@ class CreateAccountScreenActivity : AppCompatActivity() {
                 Toast.makeText(this, "Registration Failed", Toast.LENGTH_SHORT).show()
             }
         }
-
     }
-
 }

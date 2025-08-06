@@ -2,6 +2,7 @@ package com.example.cafeapp.repository
 
 import android.content.Context
 import android.util.Log
+import com.example.cafeapp.authmanager.AuthManager
 import com.google.firebase.firestore.FirebaseFirestore
 
 /**
@@ -61,7 +62,7 @@ class UsersRepository(private val context: Context) {
 
     /**
      * Пытается выполнить вход по имени и паролю:
-     * - Проверяет валидность полей
+     * - Проверяет что поля не пустые
      * - Ищет пользователя по имени
      * - Сравнивает пароль
      * - Сохраняет ID в SharedPreferences при успехе
@@ -70,33 +71,32 @@ class UsersRepository(private val context: Context) {
      * @param password пароль
      * @param callback результат (успех/ошибка + сообщение)
      */
-    fun login(userName: String, password: String, callback: (Boolean, String) -> Unit) {
+    fun login(userName: String, password: String, callback: (Boolean, String?) -> Unit) {
         //Проверка что поля не пустые
         if (userName.isBlank() || password.isBlank()) {
-            callback(false, "Fields cannot be empty")
+            callback(false, null)
             return
         }
-
         firestore.collection("Users").whereEqualTo("userName", userName).limit(1).get()
             .addOnSuccessListener { documents ->
                 if (!documents.isEmpty) {
                     val user = documents.documents[0]
-                    val storedPassword = user["password"] as String
+                    val storedPassword = user.getString("password") ?: ""
                     val userId = user.id
 
                     if (storedPassword == password) {
-                        sharedPreferences.edit().putString("loggedInUser", userId).apply()
-                        callback(true, "Login successful")
+                        val authManager = AuthManager(context)
+                        authManager.saveSession(userId, userName.trim())
+                        callback(true, userId)
                     } else {
-                        callback(false, "Incorrect password")
+                        callback(false, null)
                     }
                 } else {
-                    callback(false, "User not found")
+                    callback(false, null)
                 }
             }
             .addOnFailureListener { e ->
-                callback(false, "DataBase Error")
+                callback(false, null)
             }
     }
-
 }

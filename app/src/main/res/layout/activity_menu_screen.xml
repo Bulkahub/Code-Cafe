@@ -12,270 +12,268 @@
         android:scrollbars="vertical">
 
 
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/main"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/backMenu"
-        tools:context=".activity.MenuScreenActivity">
-
-
-
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideLineImageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.01" />
-
-
-        <ImageView
-            android:id="@+id/drawerImageView"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/imgmen1"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/guideLineImageView" />
-
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/profImageView"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="20dp"
-            android:background="@color/colorImageProf"
-            android:src="@drawable/profile1"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/guideLineImageView"
-            app:shapeAppearanceOverlay="@style/RoundedImageView" />
-
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guidelineTextView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.15" />
-
-        <TextView
-            android:id="@+id/textViewMenu1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
-            android:fontFamily="@font/font2"
-            android:lineSpacingExtra="5sp"
-            android:text="Find the best\n coffe for you"
-            android:textColor="@color/colorTextView2"
-            android:textSize="35sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/guidelineTextView2" />
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideLineSearchView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.28" />
-
-
-        <SearchView
-            android:id="@+id/searchView"
-            android:layout_width="338dp"
-            android:layout_height="54dp"
-            android:layout_marginTop="15dp"
-            android:theme="@style/CustomSearchViewThem"
-            android:background="@drawable/searchviewback"
-            android:iconifiedByDefault="false"
-            android:queryHint="Find your coffe here "
-            android:searchIcon="@drawable/search1"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.494"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/guideLineSearchView" />
-
-        <HorizontalScrollView
-            android:id="@+id/horizontalScrollView"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/main"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:fillViewport="true"
-            android:scrollbars="none"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/searchView">
+            android:background="@color/backMenu"
+            tools:context=".activity.MenuScreenActivity">
 
 
-            <LinearLayout
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideLineImageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.01" />
+
+
+            <ImageView
+                android:id="@+id/logoutIcon"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="30dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/imagexitmenu"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/guideLineImageView" />
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/profImageView"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="20dp"
+                android:background="@color/colorImageProf"
+                android:src="@drawable/profile1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/guideLineImageView"
+                app:shapeAppearanceOverlay="@style/RoundedImageView" />
+
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guidelineTextView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.15" />
+
+
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/lotte_anim_coffe"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:scaleX="2"
+                android:scaleY="2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/guidelineTextView2"
+                app:lottie_autoPlay="true"
+                app:lottie_fileName="lottecoffeanim.json"
+                app:lottie_loop="true"
+                app:lottie_speed="1.0" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideLineSearchView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.28" />
+
+
+            <SearchView
+                android:id="@+id/searchView"
+                android:layout_width="338dp"
+                android:layout_height="54dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/searchviewback"
+                android:iconifiedByDefault="false"
+                android:queryHint="Find your coffe here "
+                android:searchIcon="@drawable/search1"
+                android:theme="@style/CustomSearchViewThem"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.494"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/guideLineSearchView" />
+
+            <HorizontalScrollView
+                android:id="@+id/horizontalScrollView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:gravity="center"
-                android:orientation="horizontal"
+                android:layout_marginTop="5dp"
+                android:fillViewport="true"
+                android:scrollbars="none"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/searchView">
 
 
-                <TextView
-                    android:id="@+id/cappuccinoTextView"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:paddingStart="5dp"
-                    android:paddingEnd="10dp"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:text="Cappuccino"
-                    android:textColor="@color/colorTextViewCoffe"
-                    android:textSize="19dp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/espressoTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:paddingStart="5dp"
-                    android:paddingEnd="10dp"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:text="Espresso"
-                    android:textColor="@color/colorTextViewCoffe"
-                    android:textSize="19dp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/latteTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:paddingStart="5dp"
-                    android:paddingEnd="10dp"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:text="Latte"
-                    android:textColor="@color/colorTextViewCoffe"
-                    android:textSize="19dp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/macchiatoTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:paddingStart="5dp"
-                    android:paddingEnd="10dp"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:text="Macchiato"
-                    android:textColor="@color/colorTextViewCoffe"
-                    android:textSize="19dp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/americanoTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:paddingStart="5dp"
-                    android:paddingEnd="10dp"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:text="Americano"
-                    android:textColor="@color/colorTextViewCoffe"
-                    android:textSize="19dp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/hotChocolateTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:paddingStart="5dp"
-                    android:paddingEnd="10dp"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:text="Hot chocolate"
-                    android:textColor="@color/colorTextViewCoffe"
-                    android:textSize="19dp"
-                    android:textStyle="bold" />
+                    android:layout_marginTop="16dp"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    app:layout_constraintTop_toBottomOf="@id/searchView">
 
 
-            </LinearLayout>
-        </HorizontalScrollView>
+                    <TextView
+                        android:id="@+id/cappuccinoTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:paddingStart="5dp"
+                        android:paddingEnd="10dp"
+                        android:text="Cappuccino"
+                        android:textColor="@color/colorTextViewCoffe"
+                        android:textSize="19dp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/espressoTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:paddingStart="5dp"
+                        android:paddingEnd="10dp"
+                        android:text="Espresso"
+                        android:textColor="@color/colorTextViewCoffe"
+                        android:textSize="19dp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/latteTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:paddingStart="5dp"
+                        android:paddingEnd="10dp"
+                        android:text="Latte"
+                        android:textColor="@color/colorTextViewCoffe"
+                        android:textSize="19dp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/macchiatoTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:paddingStart="5dp"
+                        android:paddingEnd="10dp"
+                        android:text="Macchiato"
+                        android:textColor="@color/colorTextViewCoffe"
+                        android:textSize="19dp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/americanoTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:paddingStart="5dp"
+                        android:paddingEnd="10dp"
+                        android:text="Americano"
+                        android:textColor="@color/colorTextViewCoffe"
+                        android:textSize="19dp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/hotChocolateTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:paddingStart="5dp"
+                        android:paddingEnd="10dp"
+                        android:text="Hot chocolate"
+                        android:textColor="@color/colorTextViewCoffe"
+                        android:textSize="19dp"
+                        android:textStyle="bold" />
 
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerViewCoffeItem"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView" />
+                </LinearLayout>
+            </HorizontalScrollView>
 
 
-        <TextView
-            android:id="@+id/textViewSpecialOffer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:text="Special offer for you"
-            android:textColor="@color/textViewSpecialOffer"
-            android:textSize="25dp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.08"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/recyclerViewCoffeItem" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerViewSpecialOffer"
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
-            app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewSpecialOffer"
-            app:layout_constraintVertical_bias="0.345" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewCoffeItem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView" />
 
 
-        <androidx.fragment.app.FragmentContainerView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:id="@+id/nav_host_fragment"
-            android:name="androidx.navigation.fragment.NavHostFragment"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/bottomNavigationView"
-            app:defaultNavHost="true"
-            android:visibility="gone"
-            app:navGraph="@navigation/nav_graph"/>
+            <TextView
+                android:id="@+id/textViewSpecialOffer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="Special offer for you"
+                android:textColor="@color/textViewSpecialOffer"
+                android:textSize="25dp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.08"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/recyclerViewCoffeItem" />
 
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/bottomNavigationView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/bottomnavigation"
-            app:itemIconSize="32dp"
-            app:itemIconTint="@color/item_icon_color"
-            app:labelVisibilityMode="unlabeled"
-            style="@style/CustomBottomNavigation"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:menu="@menu/bottom_menu" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewSpecialOffer"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewSpecialOffer"
+                app:layout_constraintVertical_bias="0.345" />
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/nav_host_fragment"
+                android:name="androidx.navigation.fragment.NavHostFragment"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:visibility="gone"
+                app:defaultNavHost="true"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/bottomNavigationView"
+                app:navGraph="@navigation/nav_graph" />
+
+            <com.google.android.material.bottomnavigation.BottomNavigationView
+                android:id="@+id/bottomNavigationView"
+                style="@style/CustomBottomNavigation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bottomnavigation"
+                app:itemIconSize="32dp"
+                app:itemIconTint="@color/item_icon_color"
+                app:labelVisibilityMode="unlabeled"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:menu="@menu/bottom_menu" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </layout>
 

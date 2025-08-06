@@ -5,8 +5,10 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.SearchView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
@@ -17,6 +19,7 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.cafeapp.R
 import com.example.cafeapp.adapter.CoffeAdapter
+import com.example.cafeapp.authmanager.AuthManager
 import com.example.cafeapp.databinding.ActivityMenuScreenBinding
 import com.example.cafeapp.dataclass.CoffeItem
 import com.example.cafeapp.navigationkeys.NavigationKeys
@@ -51,12 +54,16 @@ class MenuScreenActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
+        //enableEdgeToEdge()
         // Привязываем layout через DataBinding.
         binding = DataBindingUtil.setContentView(this, R.layout.activity_menu_screen)
 
+        //Инициализация AuthManager и получение  id текущего пользователя.
+        val authManager = AuthManager(this)
+        val userId = authManager.getUserId()
+        Toast.makeText(this, "UserId = $userId", Toast.LENGTH_SHORT).show()
+
         // Инициализируем ViewModels.
-        //cartViewModel = ViewModelProvider(this)[CartViewModel::class.java]
         viewModel = ViewModelProvider(this)[MenuViewModel::class.java]
 
         // Настраиваем навигацию с помощью BottomNavigationView + NavController.
@@ -201,11 +208,32 @@ class MenuScreenActivity : AppCompatActivity() {
                 badgeNotif.maxCharacterCount = 4
             }
         }
+
+        //Обработчик нажатия на конопку.Описание действий при выходе из аккаунта.
+        binding.logoutIcon.setOnClickListener {
+            AlertDialog.Builder(this)
+                .setTitle("Exit")
+                .setMessage("Are you sure you want to log out of your account?")
+                .setPositiveButton("Yes") { _, _ -> logout() }
+                .setNegativeButton("No", null)
+                .show()
+        }
     }
 
     // Метод onResume оставлен пустым — можно использовать для обновлений при возврате к экрану.
     override fun onResume() {
         super.onResume()
+    }
+
+    //Навигация выхода из аккаунта.
+    private fun logout() {
+        val authManager = AuthManager(this)
+        authManager.clearSession()
+
+        val intent = Intent(this, HomeScreenActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
+        finish()
     }
 }
 
