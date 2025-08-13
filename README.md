@@ -42,7 +42,6 @@
 
 
 ## Скриншоты
-
 ![Экран авторизации](screenshots/auth_screen.png)  
 
 
