@@ -43,7 +43,13 @@
 
 ## Скриншоты
 
-![Экран авторизации](screenshots/auth_screen.png)  ![Главный экран(Меню)](screenshots/menu_screen.png)  ![Экран описания и выбора размера](screenshots/coffe_item_screen.png)  ![Экран(Корзина)](screenshots/cart_screen.png)    ![Экран(Избранное)](screenshots/favorites_screen.png)
+![Экран авторизации](screenshots/auth_screen.png) 
+![Главный экран(Меню)](screenshots/menu_screen.png)  
+
+![Экран описания и выбора размера](screenshots/coffe_item_screen.png) 
+![Экран(Корзина)](screenshots/cart_screen.png)   
+
+![Экран(Избранное)](screenshots/favorites_screen.png)
 
 
 # Контакты
