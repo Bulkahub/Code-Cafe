@@ -43,9 +43,14 @@
 
 ## Скриншоты
 
-##Экран авторизации
-|![Экран авторизации](screenshots/auth_screen.png) |  ![Главный экран(Меню)](screenshots/menu_screen.png) |  ![Экран(размер,описание)](screenshots/coffe_item_screen.png) | 
-                                  |![Экран(Корзина)](screenshots/cart_screen.png) | ![Экран(Избранное)](screenshots/favorites_screen.png)  
+###Экран авторизации
+![Экран авторизации](screenshots/auth_screen.png)  
+
+
+![Главный экран(Меню)](screenshots/menu_screen.png)  
+![Экран(размер,описание)](screenshots/coffe_item_screen.png) 
+![Экран(Корзина)](screenshots/cart_screen.png) 
+![Экран(Избранное)](screenshots/favorites_screen.png)  
 
 
 
