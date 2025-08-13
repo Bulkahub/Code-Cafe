@@ -44,19 +44,19 @@
 ## Скриншоты
 
 
-<h3>Экран авторизации</h3>
+<h3>Экран авторизации</h3>.
 <img src="screenshots/auth_screen.png" width="200"/>
 
-<h3>Главный экран</h3>
+<h3>Главный экран</h3>.
 <img src="screenshots/menu_screen.png" width="200"/>
 
-<h3>Экран выбора размера и описания кофе</h3>
+<h3>Экран выбора размера и описания кофе</h3>.
 <img src="screenshots/coffe_item_screen.png" width="200"/>
 
-<h3>Экран Корзина</h3>
+<h3>Экран Корзина</h3>.
 <img src="screenshots/cart_screen.png" width="200"/>
 
-<h3>Экран Избранное</h3>
+<h3>Экран Избранное</h3>.
 <img src="screenshots/favorites_screen.png" width="200"/>
 
 
