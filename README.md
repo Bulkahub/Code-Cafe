@@ -42,3 +42,16 @@
 
 
 ## Скриншоты
+
+![Экран авторизации](screenshots/auth_screen.png)
+![Главный экран(Меню)](screenshots/menu_screen.png)
+![Экран описания и выбора размера](screenshots/coffe_item_screen.png)
+![Экран(Корзина)](screenshots/cart_screen.png)
+![Экран(Избранное)](screenshots/favorites_screen.png)
+
+
+# Контакты
+
+- **Email** : bulon.danilov1999@mail.ru
+- **Telegram** : @jeydanilov
+- **GitHub (MyApp)**: https://github.com/Bulkahub/Code-Cafe.git 
