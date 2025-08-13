@@ -46,10 +46,16 @@
 ###Экран авторизации
 ![Экран авторизации](screenshots/auth_screen.png)  
 
-
+###Главный экран
 ![Главный экран(Меню)](screenshots/menu_screen.png)  
+
+###Экран выбора размера и описания кофе
 ![Экран(размер,описание)](screenshots/coffe_item_screen.png) 
+
+###Экран Корзина
 ![Экран(Корзина)](screenshots/cart_screen.png) 
+
+###Экран Избранное
 ![Экран(Избранное)](screenshots/favorites_screen.png)  
 
 
