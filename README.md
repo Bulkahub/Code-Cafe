@@ -58,7 +58,20 @@
 ###Экран Избранное
 ![Экран(Избранное)](screenshots/favorites_screen.png)  
 
+<h3>Экран авторизации</h3>
+<img src="screenshots/auth_screen.png" width="300"/>
 
+<h3>Главный экран</h3>
+<img src="screenshots/menu_screen.png" width="300"/>
+
+<h3>Экран выбора размера и описания кофе</h3>
+<img src="screenshots/coffe_item_screen.png" width="300"/>
+
+<h3>Экран Корзина</h3>
+<img src="screenshots/cart_screen.png" width="300"/>
+
+<h3>Экран Избранное</h3>
+<img src="screenshots/favorites_screen.png" width="300"/>
 
 
 
