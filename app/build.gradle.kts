@@ -71,7 +71,7 @@ dependencies {
     implementation(libs.androidx.constraintlayout)
 
     //Firebase
-    implementation(platform("com.google.firebase:firebase-bom:33.16.0"))
+    implementation(platform("com.google.firebase:firebase-bom:34.1.0"))
     implementation("com.google.firebase:firebase-analytics")
 
     //Firebase Auth
@@ -106,7 +106,7 @@ dependencies {
     //Navigation JetPack
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
-    implementation("androidx.fragment:fragment-ktx:1.8.8")
+    implementation("androidx.fragment:fragment-ktx:1.8.9")
 
 
     //Hilt
