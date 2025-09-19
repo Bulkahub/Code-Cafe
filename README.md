@@ -36,6 +36,7 @@ Supports operations: save, read, clear
 
 
 Project Description
+
 A mobile Android application built on modern architecture with a focus on scalability, readability, and user convenience. Key features include:
 
 1.Firebase Authentication – secure login with validation and error handling
