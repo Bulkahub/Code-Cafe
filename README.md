@@ -80,8 +80,8 @@ Screenshots
 
 
 
-# Контакты
+# Contacts
 
-- **Email** : bulon.danilov1999@mail.ru
+- **Email** : yevgeniy_danilov_2025@inbox.ru
 - **Telegram** : @jeydanilov
 - **GitHub (MyApp)**: https://github.com/Bulkahub/Code-Cafe.git 
