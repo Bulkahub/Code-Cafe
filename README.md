@@ -2,7 +2,8 @@ Modern Android Application
 The application is built using a modern MVVM architecture, a reactive approach via StateFlow, and Firebase integration. 
 The project demonstrates clean architecture and scalability.
 
-Tech Stack
+Tech Stack:
+
 1.Kotlin – primary development language
 
 2.MVVM (Model-View-ViewModel) – application architecture
