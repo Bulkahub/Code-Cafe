@@ -84,4 +84,4 @@ Screenshots
 
 - **Email** : yevgeniy_danilov_2025@inbox.ru
 - **Telegram** : @jeydanilov
-- **GitHub (MyApp)**: https://github.com/Bulkahub/Code-Cafe.git 
+- **GitHub (MyApp)**: https://github.com/jeyDanilov/Code-Cafe.git
