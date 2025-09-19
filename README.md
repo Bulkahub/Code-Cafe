@@ -1,69 +1,87 @@
-# Современное Android-приложение.
+Modern Android Application
+The application is built using a modern MVVM architecture, a reactive approach via StateFlow, and Firebase integration. 
+The project demonstrates clean architecture and scalability.
 
-Приложение реализовано с использованием современной архитектуры MVVM, реактивного подхода через StateFlow и интеграции с Firebase.Проект демонстрирует чистую архитектуру и маштабируемость.
+Tech Stack:
 
+1.Kotlin – primary development language
 
-## Стек технологий
+2.MVVM (Model-View-ViewModel) – application architecture
 
-- **Kotlin** - основной язык разработки
-- **MVVM (Model-View-ViewModel)** - архитектура приложения
-- **StateFlow** - реактивное управление состоянием
-- **LiveData** - наблюдение за состояние UI
-- **View Binding** - безопасная работа с элементами интерфейса
-- **Firebase Authentication** - авторизация пользователя
-- **Firebase Firestore** - облачное хранилище данных
-- **Dagger 2 (через Hilt)** - внедрение зависимостей с автоматической генерацией компонентов.(Современный DI-фреймворк с упрощенной конфигурацией)
-- **Coroutines** - асинхронная обработка данных и событий
-- **JetPack Navigation Component** - управление переходами между экранами через 'NavGraph', 'NavController', 'FragmentContainerView'
-- **Lottie Animation** - для оживленности интерфейса главного меню , а также плавности переходов
-- **DataStore (Preferences)** - для локального хранения пользовательских настроек и состояния.Обеспечивает асинхронную и безопасную работу с данными
-- **JSON + kotlin.serialization** - реализован 'CartRepository' 'FavoritesCart' для хранения данных пользователя.
-  *Используется DataStore для локального хранения
-  *Данные сериализируются в формате JSON
-  *Обновление UI реализовано через 'StateFlow'
-  *Поддерживаются операции: сохранение, чтение, очистка.
+3.StateFlow – reactive state management
 
+4.LiveData – UI state observation
 
-## Описание проекта
+5.View Binding – safe interaction with UI elements
 
-Мобильное Android-приложение, построено на современной архитектуре с акцентом на маштабируемость, читаемость и удобство для пользоватея.
-Включает в себя следующие ключевые функции:
+6.Firebase Authentication – user authentication
 
-- **Авторизация через Firebase Authentication** - безопасный вход с валидацией и обработкой ошибок
-- **Firebase Firestore** - для хранения пользовательских данных (UserName) с привязкой к uid
-- **Локальное управление корзиной и избранным** - через DataStore + JSON, с реактивным UI
-- **StateFlow + LiveData** - гибкое управление состоянием и обновлением интерфейса
-- **Чистая архитектура (MVVM)** - разделение слоев, маштабируемость
-- **DI через Hilt(Dagger2)** - автоматическая генерация компонентов, упрощенная конфигурация
-- **JetPack Navigation** - управление переходами через 'NavGraph' и 'FragmentContainerView'
-- **Lottie Animation** - плавные переходы и анимации для улучшения UX
-- **Coroutines** - асинхронная работа с данными
-- **View Binding** - безопасный доступ к элементам интерфейса.
+7.Firebase Firestore – cloud data storage
+
+8.Dagger 2 (via Hilt) – dependency injection with automatic component generation (modern DI framework with simplified configuration)
+
+9.Coroutines – asynchronous data and event handling
+
+10.JetPack Navigation Component – screen navigation using NavGraph, NavController, and FragmentContainerView
+
+11.Lottie Animation – adds liveliness to the main menu and smooth transitions
+
+12.DataStore (Preferences) – local storage for user settings and state, ensuring asynchronous and safe data handling
+
+13.JSON + kotlin.serialization – implemented CartRepository and FavoritesCart for user data storage
+Uses DataStore for local persistence
+Data is serialized in JSON format
+UI updates are handled via StateFlow
+Supports operations: save, read, clear
 
 
-## Скриншоты
+Project Description
+
+A mobile Android application built on modern architecture with a focus on scalability, readability, and user convenience. Key features include:
+
+1.Firebase Authentication – secure login with validation and error handling
+
+2.Firebase Firestore – stores user data (UserName) linked to UID
+
+3.Local cart and favorites management – via DataStore + JSON with reactive UI
+
+4.StateFlow + LiveData – flexible state and UI update management
+
+5.Clean architecture (MVVM) – layer separation and scalability
+
+6.DI via Hilt (Dagger2) – automatic component generation and simplified configuration
+
+7.JetPack Navigation – screen transitions using NavGraph and FragmentContainerView
+
+8.Lottie Animation – smooth transitions and animations for enhanced UX
+
+9.Coroutines – asynchronous data handling
+
+10.View Binding – safe access to UI elements
 
 
-<h3>Экран авторизации.</h3>
+Screenshots
+
+<h3>Login screen.</h3>
 <img src="screenshots/auth_screen.png" width="200"/>
 
-<h3>Главный экран.</h3>
+<h3>Home screen.</h3>
 <img src="screenshots/menu_screen.png" width="200"/>
 
-<h3>Экран выбора размера и описания кофе.</h3>
+<h3>Coffee size and description selection screen.</h3>
 <img src="screenshots/coffe_item_screen.png" width="200"/>
 
-<h3>Экран Корзина.</h3>
+<h3>Trash Screen.</h3>
 <img src="screenshots/cart_screen.png" width="200"/>
 
-<h3>Экран Избранное.</h3>
+<h3>Favorites Screen.</h3>
 <img src="screenshots/favorites_screen.png" width="200"/>
 
 
 
 
-# Контакты
+# Contacts
 
-- **Email** : bulon.danilov1999@mail.ru
+- **Email** : yevgeniy_danilov_2025@inbox.ru
 - **Telegram** : @jeydanilov
-- **GitHub (MyApp)**: https://github.com/Bulkahub/Code-Cafe.git 
+- **GitHub (MyApp)**: https://github.com/jeyDanilov/Code-Cafe.git
