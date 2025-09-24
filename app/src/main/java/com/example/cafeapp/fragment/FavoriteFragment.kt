@@ -19,17 +19,17 @@ import com.example.cafeapp.view.CartViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
-/** Фрагмент отображает список избранных товаров пользователя.*/
+/** Fragment displaying the user's list of favorite items.*/
 @AndroidEntryPoint
 class FavoriteFragment : Fragment() {
 
-    // Получаем общую ViewModel для взаимодействия между фрагментами.
+    // Access shared ViewModel for interaction between fragments.
     private val cartViewModel: CartViewModel by activityViewModels()
 
-    // RecyclerView для отображения избранных элементов.
+    // RecyclerView for displaying favorite items.
     private lateinit var recyclerViewFav: RecyclerView
 
-    // Адаптер с режимом FAVORITE и обработчиком удаления.
+    // Adapter with FAVORITE mode and remove handler.
     private lateinit var favoriteAdapter: CartAdapter
 
     override fun onCreateView(
@@ -43,20 +43,20 @@ class FavoriteFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Инициализация RecyclerView и установка менеджера с 2 колонками.
+        // Initialize RecyclerView and set layout manager with 2 columns.
         recyclerViewFav = view.findViewById(R.id.recyclerViewFavorite)
         recyclerViewFav.layoutManager = GridLayoutManager(requireContext(), 2)
 
-        // Настраиваем адаптер: при нажатии удаляем товар из избранного.
+        // Set up adapter: on click, remove item from favorites.
         favoriteAdapter = CartAdapter(
             onRemoveClick = { item ->
                 cartViewModel.removeFromFavorites(item)
             },
-            mode = DisplayMode.FAVORITE // Устанавливаем режим отображения
+            mode = DisplayMode.FAVORITE // Set display mode
         )
         recyclerViewFav.adapter = favoriteAdapter
 
-        // Отслеживаем изменения списка избранного.
+        // Observe changes in the favorites list.
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 cartViewModel.favoriteList.collect { favItems ->

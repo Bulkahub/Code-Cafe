@@ -19,8 +19,8 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 /**
- * ViewModel для управления корзиной и избранными товарами.
- * Использует CartRepository и FavoritesRepository для хранения и обновления данных через DataStore.
+ * ViewModel for managing cart and favorite items.
+ * Uses CartRepository and FavoritesRepository to store and update data via DataStore.
  */
 @HiltViewModel
 class CartViewModel @Inject constructor(
@@ -29,19 +29,19 @@ class CartViewModel @Inject constructor(
 ) :
     ViewModel() {
 
-    // Поток товаров в корзине, полученный из репозитория. Оборачиваем в StateFlow для подписки.
+    // Flow of cart items retrieved from the repository. Wrapped in StateFlow for subscription.
     val _cartItems: StateFlow<List<CartItem>> = cartRepository.cartItems
         .stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
     val cartItems: StateFlow<List<CartItem>> = _cartItems
 
-    // Подсчитываем количество элементов в корзине.
+    // Calculates the number of items in the cart.
     val cartSize: StateFlow<Int> = cartItems.map { it.size }
         .stateIn(viewModelScope, SharingStarted.Eagerly, 0)
 
 
     /**
-     * Добавляет товар в корзину: загружает текущий список, добавляет новый, сохраняет.
-     * Использует suspend, так как first() — это блокирующий вызов.
+     * Adds an item to the cart: loads the current list, adds the new item, and saves it.
+     * Uses suspend because first() is a blocking call.
      */
     suspend fun addToCart(item: CartItem) {
         val currentItems = cartRepository.cartItems.first()
@@ -50,7 +50,7 @@ class CartViewModel @Inject constructor(
 
     }
 
-    //Очищает корзину, удаляя все элементы из DataStore.
+    // Clears the cart by removing all items from DataStore.
     fun clearCart() {
         viewModelScope.launch {
             cartRepository.clearCart()
@@ -58,15 +58,15 @@ class CartViewModel @Inject constructor(
     }
 
 
-    // Внутренний поток избранных элементов.
+    // Internal flow of favorite items.
     private val _favoriteList = MutableStateFlow<List<CartItem>>(emptyList())
     val favoriteList: StateFlow<List<CartItem>> = _favoriteList
 
-    // Подсчитываем количество избранных товаров.
+    // Calculates the number of favorite items.
     val favoriteCount: StateFlow<Int> = favoriteList.map { it.size }
         .stateIn(viewModelScope, SharingStarted.Eagerly, 0)
 
-    // При инициализации ViewModel — загружаем избранные из DataStore.
+    // On ViewModel initialization — load favorites from DataStore.
     init {
         viewModelScope.launch {
             _favoriteList.value = favoritesRepository.loadFavorites() as MutableList<CartItem>
@@ -74,8 +74,8 @@ class CartViewModel @Inject constructor(
     }
 
     /**
-     * Добавляет товар в избранное, если его ещё нет.
-     * Обновляет локальный список и сохраняет в DataStore.
+     * Adds an item to favorites if it's not already present.
+     * Updates the local list and saves it to DataStore.
      */
     fun addToFavorites(item: CartItem) {
         viewModelScope.launch {
@@ -88,7 +88,7 @@ class CartViewModel @Inject constructor(
         }
     }
 
-    /**Удаляет товар из избранного и сохраняет изменения.*/
+    /**Removes an item from favorites and saves the changes.*/
     fun removeFromFavorites(item: CartItem) {
         viewModelScope.launch {
             val update = _favoriteList.value.toMutableList()
@@ -98,7 +98,7 @@ class CartViewModel @Inject constructor(
         }
     }
 
-    /**Удаляет конкретный товар из корзины по его ID.*/
+    /** Removes a specific item from the cart by its ID.*/
     fun removeCart(item: CartItem) {
         viewModelScope.launch {
             val update = cartItems.value.toMutableList().apply {

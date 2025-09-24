@@ -12,27 +12,27 @@ import com.example.cafeapp.adapter.NotificationAdapter
 import com.example.cafeapp.view.NotificationViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
-/** Фрагмент, отображающий список уведомлений пользователя.*/
+/** Fragment displaying the user's list of notifications.*/
 @AndroidEntryPoint
 class NotificationFragment : Fragment(R.layout.notification_fragment) {
 
-    // ViewModel с уведомлениями, привязанная к жизненному циклу фрагмента.
+    // ViewModel with notifications, tied to the fragment's lifecycle.
     private val viewModel: NotificationViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        // Инициализация адаптера для отображения уведомлений.
+        // Initialize adapter for displaying notifications.
         val adapterNotif = NotificationAdapter()
 
-        // Получаем ссылку на RecyclerView и устанавливаем менеджер для вертикального списка.
+        // Get reference to RecyclerView and set layout manager for vertical list.
         val recyclerViewNotif = view.findViewById<RecyclerView>(R.id.recyclerViewNotification)
         recyclerViewNotif.layoutManager = LinearLayoutManager(requireContext())
         recyclerViewNotif.adapter = adapterNotif
 
-        // Подписка на поток уведомлений из ViewModel.
+        // Subscribe to the notification flow from ViewModel.
         lifecycleScope.launchWhenStarted {
             viewModel.notifications.collect { list ->
-                // Обновляем адаптер, отображая свежие уведомления в обратном порядке.
+                // Update adapter to show fresh notifications in reverse order.
                 adapterNotif.submitList(list.reversed())
             }
         }

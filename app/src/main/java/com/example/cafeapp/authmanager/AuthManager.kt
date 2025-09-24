@@ -3,13 +3,13 @@ package com.example.cafeapp.authmanager
 import android.content.Context
 import android.util.Log
 
-//Менеджер сессии пользователя.
+// User session manager.
 class AuthManager(context: Context) {
 
-    //Инициализация SharedPreferences для хранения данных сессии.
+    // Initialize SharedPreferences for storing session data.
     private val prefs = context.getSharedPreferences("CaffeAppPref", Context.MODE_PRIVATE)
 
-    //Сохраняет данные пользователя в SharedPreferences.
+    // Save user data in SharedPreferences.
     fun saveSession(userId: String, userName: String) {
         prefs.edit()
             .putString("loggedInUser", userId)
@@ -17,17 +17,17 @@ class AuthManager(context: Context) {
             .apply()
     }
 
-    //Проверяет, авторизован ли пользователь
+    // Check if the user is authorized.
     fun isLoggedIn(): Boolean {
         val userId = prefs.getString("loggedInUser", null)
         Log.d("SharedPrefsCheck", "Saved userId: $userId")
         return userId != null
     }
 
-    //Получает сохраненный userId.
+    // Retrieve the saved userId.
     fun getUserId(): String? = prefs.getString("loggedInUser", null)
 
-    //Очищает все данные сессии (выход из аккаунта).
+    // Clear all session data (log out).
     fun clearSession() {
         prefs.edit().clear().apply()
     }

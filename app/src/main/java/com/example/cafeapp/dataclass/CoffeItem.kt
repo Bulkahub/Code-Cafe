@@ -1,6 +1,6 @@
 package com.example.cafeapp.dataclass
 
-//Класс данных,хранящий и предоставляющий  данные меню.
+// Data class that stores and provides menu item information.
 data class CoffeItem(
     val name: String,
     val milkType: String,

@@ -3,8 +3,8 @@ package com.example.cafeapp.hilt
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp
 
-/** Класс Application, необходимый для инициализации Hilt при запуске приложения.*/
+/** Application class required for initializing Hilt at app startup.*/
 @HiltAndroidApp
-class CafeAppHilt: Application() {
-    // Дополнительная логика инициализации приложения может быть добавлена здесь при необходимости.
+class CafeAppHilt : Application() {
+    // Additional application initialization logic can be added here if needed!
 }

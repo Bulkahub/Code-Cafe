@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.cafeapp.R
 import com.example.cafeapp.dataclass.NotificationData
 
-// Адаптер для отображения уведомлений в RecyclerView.
+// Adapter for displaying notifications in RecyclerView.
 class NotificationAdapter :
     ListAdapter<NotificationData, NotificationAdapter.ViewHolder>(DiffCallback) {
 
@@ -31,18 +31,18 @@ class NotificationAdapter :
         holder.bind(getItem(position))
     }
 
-    // ViewHolder — связывает данные NotificationData с layout.
+    // ViewHolder — binds NotificationData to layout.
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        // Элементы интерфейса — иконка и текст сообщения.
+        // UI elements — icon and message text.
         private val icon = itemView.findViewById<ImageView>(R.id.ic_info)
         private val text = itemView.findViewById<TextView>(R.id.messageTextNotif)
 
-        // Метод для отображения содержимого уведомления.
+        // Method to display notification content.
         fun bind(note: NotificationData) {
-            text.text = note.message // Устанавливает текст уведомления.
+            text.text = note.message // Sets the notification message text.
 
-            // Выбирает иконку в зависимости от типа уведомления.
+            // Selects icon based on notification type.
             icon.setImageResource(
                 when (note.type) {
                     NotificationData.Type.SUCCESS -> R.drawable.ic_check
@@ -53,15 +53,15 @@ class NotificationAdapter :
         }
     }
 
-    // Callback для сравнения уведомлений при обновлении списка.
+    // Callback for comparing notifications when updating the list.
     companion object {
         val DiffCallback = object : DiffUtil.ItemCallback<NotificationData>() {
 
-            // Сравниваем ID — используется для определения, изменился ли элемент.
+            // Compare IDs — used to determine if the item has changed.
             override fun areItemsTheSame(oldItem: NotificationData, newItem: NotificationData) =
                 oldItem.id == newItem.id
 
-            // Сравниваем полное содержимое уведомления.
+            // Compare full content of the notification.
             override fun areContentsTheSame(oldItem: NotificationData, newItems: NotificationData) =
                 oldItem == newItems
         }

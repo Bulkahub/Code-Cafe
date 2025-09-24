@@ -15,12 +15,12 @@ import com.example.cafeapp.repository.FavoritesRepository
 import javax.inject.Named
 import javax.inject.Singleton
 
-/** Модуль Hilt для предоставления DataStore и репозиториев.**/
+/** Hilt module for providing DataStore and repositories.**/
 @Module
 @InstallIn(SingletonComponent::class)
 object DataStoreModule {
 
-    // Предоставляет DataStore с файлом "favorites_store" для хранения избранного.
+    // Provides a DataStore with the file "favorites_store" for storing favorites.
     @Provides
     @Singleton
     fun provideDataStore(@ApplicationContext context: Context): DataStore<Preferences> {
@@ -29,7 +29,7 @@ object DataStoreModule {
         }
     }
 
-    // Создаёт FavoritesRepository, используя переданный DataStore.
+    // Creates a FavoritesRepository using the provided DataStore.
     @Provides
     @Singleton
     fun provideFavoritesRepository(
@@ -37,7 +37,7 @@ object DataStoreModule {
     ): FavoritesRepository = FavoritesRepository(dataStore)
 
 
-    // Предоставляет отдельный DataStore с именем "cart_store" — используется для корзины.
+    // Provides a separate DataStore named "cart_store" — used for the cart.
     @Provides
     @Singleton
     @Named("cart")
@@ -47,7 +47,7 @@ object DataStoreModule {
         }
     }
 
-    // Создаёт CartRepository, передавая ему DataStore, привязанный через @Named("cart").
+    // Creates a CartRepository by passing the DataStore bound via @Named("cart").
     @Provides
     @Singleton
     fun provideCartRepostory(@Named("cart") dataStore: DataStore<Preferences>): CartRepository {

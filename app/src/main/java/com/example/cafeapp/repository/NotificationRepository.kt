@@ -11,29 +11,29 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Singleton
 
-/** Репозиторий для управления уведомлениями внутри приложения.
- *  Хранит список NotificationData через StateFlow и позволяет добавлять, отложить и очищать уведомления.**/
+/** Repository for managing in-app notifications.
+ *  Stores a list of NotificationData via StateFlow and allows adding, delaying, and clearing notifications.**/
 @Singleton
 class NotificationRepository @Inject constructor() {
 
-    // Внутренний поток уведомлений — MutableStateFlow.
+    // Internal notification flow — MutableStateFlow.
     private val _notification = MutableStateFlow<List<NotificationData>>(emptyList())
 
-    // Публичный поток уведомлений для подписки во ViewModel/Fragment.
+    // Public notification flow for subscription in ViewModel/Fragment.
     val notification: StateFlow<List<NotificationData>> = _notification
 
     /**
-     * Добавляет уведомление в список с указанным типом.
-     * Тип по умолчанию — информационное сообщение (INFO).
+     * Adds a notification to the list with the specified type.
+     * Default type — informational message (INFO).
      */
     fun push(message: String, type: NotificationData.Type = NotificationData.Type.INFO) {
         val note = NotificationData(message = message, type = type)
-        _notification.update { it + note } // Добавляем к текущему списку.
+        _notification.update { it + note } // Append to the current list.
     }
 
     /**
-     * Добавляет уведомление с заданной задержкой (по умолчанию 10 секунд).
-     * Выполняется в фоновом потоке через CoroutineScope.
+     * Adds a notification with a specified delay (default is 10 seconds).
+     * Executed on a background thread via CoroutineScope.
      */
     fun push(
         message: String,
@@ -46,7 +46,7 @@ class NotificationRepository @Inject constructor() {
         }
     }
 
-    // Очищает список уведомлений.
+    // Clears the notification list.
     fun clear() {
         _notification.value = emptyList()
     }

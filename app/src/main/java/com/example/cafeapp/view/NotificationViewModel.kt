@@ -12,52 +12,56 @@ import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 
 
-/** ViewModel для управления логикой уведомлений.*/
+/** ViewModel for managing notification logic.*/
 
 @HiltViewModel
 class NotificationViewModel @Inject constructor(
     private val repo: NotificationRepository
-): ViewModel() {
+) : ViewModel() {
 
     /**
-     * Поток всех уведомлений.
-     * Получаем напрямую из репозитория.
+     * Flow of all notifications.
+     * Retrieved directly from the repository.
      */
     val notifications: StateFlow<List<NotificationData>> = repo.notification
 
 
     /**
-     * Поток количества непрочитанных уведомлений.
-     * Обновляется динамически при изменении списка.
+     * Flow of unread notification count.
+     * Updates dynamically when the list changes.
      */
     val unreadCount: StateFlow<Int> = notifications.map { list ->
-        list.count{!it.isRead}
-    }.stateIn(viewModelScope, SharingStarted.Eagerly,0)
+        list.count { !it.isRead }
+    }.stateIn(viewModelScope, SharingStarted.Eagerly, 0)
 
 
     /**
-     * Отправить уведомление немедленно.
-     * Тип по умолчанию — информационное сообщение.
+     * Sends a notification immediately.
+     * Default type is informational.
      */
-    fun notifyNow(message: String,type: NotificationData.Type = NotificationData.Type.INFO){
-        repo.push(message,type)
+    fun notifyNow(message: String, type: NotificationData.Type = NotificationData.Type.INFO) {
+        repo.push(message, type)
     }
 
 
     /**
-     * Отправить уведомление с задержкой.
-     * delayMillis — время задержки (по умолчанию 10 секунд).
+     * Sends a notification with a delay.
+     * delayMillis — delay time (default is 10 seconds).
      */
-    fun notifyLater(message: String,delayMillis: Long = 10000,type: NotificationData.Type = NotificationData.Type.INFO){
-        repo.push(message = message,delayMillis,type)
+    fun notifyLater(
+        message: String,
+        delayMillis: Long = 10000,
+        type: NotificationData.Type = NotificationData.Type.INFO
+    ) {
+        repo.push(message = message, delayMillis, type)
     }
 
 
     /**
-     * Удалить все уведомления.
-     * Полезно при выходе из аккаунта или обновлении состояния.
+     * Clears all notifications.
+     * Useful when logging out or resetting state.
      */
-    fun clearAll(){
+    fun clearAll() {
         repo.clear()
     }
 }

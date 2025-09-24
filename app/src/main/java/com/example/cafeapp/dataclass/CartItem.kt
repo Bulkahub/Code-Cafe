@@ -4,7 +4,7 @@ package com.example.cafeapp.dataclass
 import kotlinx.serialization.Serializable
 import java.util.UUID
 
-//Класс данных,хранящий и предоставляющий данные в корзине.
+// Data class that stores and provides cart item information.
 @Serializable
 data class CartItem(
     val name: String,

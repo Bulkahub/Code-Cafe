@@ -29,54 +29,54 @@ import com.example.cafeapp.view.NotificationViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlin.jvm.java
 
-// Главный экран приложения с меню кофе и спецпредложениями.
+// Main screen of the app with coffee menu and special offers.
 @AndroidEntryPoint
 class MenuScreenActivity : AppCompatActivity() {
 
-    // ViewBinding для доступа к UI-элементам.
+    // ViewBinding for accessing UI elements.
     lateinit var binding: ActivityMenuScreenBinding
 
-    // ViewModel для отображения списка кофе.
+    // ViewModel for displaying the coffee list.
     private lateinit var viewModel: MenuViewModel
 
-    // ViewModel для управления корзиной.
+    // ViewModel for managing the cart.
     private val cartViewModel: CartViewModel by viewModels()
 
-    // ViewModel для управления уведомлениями.
+    // ViewModel for managing notifications.
     private val notificationViewModel: NotificationViewModel by viewModels()
 
-    // Адаптер для основного списка кофе.
+    // Adapter for the main coffee list.
     private lateinit var adapter: CoffeAdapter
 
-    // Адаптер для спецпредложений.
+    // Adapter for special offers.
     private lateinit var adapterSpecialOffer: CoffeAdapter
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //enableEdgeToEdge()
-        // Привязываем layout через DataBinding.
+        // Bind layout using DataBinding.
         binding = DataBindingUtil.setContentView(this, R.layout.activity_menu_screen)
 
-        //Инициализация AuthManager и получение  id текущего пользователя.
+        // Initialize AuthManager and get current user ID.
         val authManager = AuthManager(this)
         val userId = authManager.getUserId()
         Toast.makeText(this, "UserId = $userId", Toast.LENGTH_SHORT).show()
 
-        // Инициализируем ViewModels.
+        // Initialize ViewModels.
         viewModel = ViewModelProvider(this)[MenuViewModel::class.java]
 
-        // Настраиваем навигацию с помощью BottomNavigationView + NavController.
+        // Set up navigation using BottomNavigationView + NavController.
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as? NavHostFragment
         val navController =
             navHostFragment?.navController ?: throw IllegalStateException("NavController no find")
         binding.bottomNavigationView.setupWithNavController(navController)
 
-        // Список товаров, уже добавленных в корзину.
+        // List of items already added to the cart.
         val cartList = mutableListOf<CoffeItem>()
 
-        // Адаптер для отображения обычных позиций.
+        // Adapter for displaying regular coffee items.
         adapter = CoffeAdapter(mutableListOf(), cartList) { selectedCoffe ->
             val intent = Intent(this, CoffeItemActivity::class.java).apply {
                 putExtra(NavigationKeys.NAME, selectedCoffe.name)
@@ -87,7 +87,7 @@ class MenuScreenActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        // Адаптер для отображения спецпредложений(в будущем можно доработать).
+        // Adapter for displaying special offers (can be improved in future).
         adapterSpecialOffer = CoffeAdapter(mutableListOf(), cartList) { selectedCoffe ->
             val intent = Intent(this, CoffeItemActivity::class.java).apply {
                 putExtra(NavigationKeys.NAME, selectedCoffe.name)
@@ -99,7 +99,7 @@ class MenuScreenActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        // Настраиваем RecyclerView для обычных и спецпозиций.
+        // Set up RecyclerViews for regular and special items.
         binding.recyclerViewCoffeItem.layoutManager = GridLayoutManager(this, 2)
         binding.recyclerViewCoffeItem.adapter = adapter
 
@@ -107,21 +107,21 @@ class MenuScreenActivity : AppCompatActivity() {
         binding.recyclerViewSpecialOffer.adapter = adapterSpecialOffer
 
 
-        // Загружаем данные и подписываемся на изменения.
+        // Load data and observe changes.
         viewModel.loadCoffeList()
         viewModel.filteredList.observe(this) { fullList ->
             adapter.updateData(fullList.toMutableList())
             binding.recyclerViewCoffeItem.visibility = View.VISIBLE
 
         }
-        // Наблюдаем за списком спецпредложений.
+        // Observe special offers list.
         viewModel.specialOfferList.observe(this) { specialOffers ->
             adapterSpecialOffer.updateData(specialOffers.toMutableList())
             binding.recyclerViewSpecialOffer.visibility = View.VISIBLE
         }
 
 
-        //Фильтрация по названию кофе.
+        // Filter by coffee name.
         binding.cappuccinoTextView.setOnClickListener { viewModel.showCoffeType("Cappuccino") }
         binding.espressoTextView.setOnClickListener { viewModel.showCoffeType("Espresso") }
         binding.latteTextView.setOnClickListener { viewModel.showCoffeType("Latte") }
@@ -130,7 +130,7 @@ class MenuScreenActivity : AppCompatActivity() {
         binding.hotChocolateTextView.setOnClickListener { viewModel.showCoffeType("Hot Chocolate") }
 
 
-        // Обработка поиска по названию кофе.
+        // Handle search by coffee name.
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 query?.let { viewModel.filterCoffe(it) }
@@ -143,7 +143,7 @@ class MenuScreenActivity : AppCompatActivity() {
             }
         })
 
-        // Навигация по нижнему меню (домой / корзина).
+        // Navigation via bottom menu (home / cart).
         binding.bottomNavigationView.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.nav_home -> {
@@ -153,7 +153,7 @@ class MenuScreenActivity : AppCompatActivity() {
                 }
 
                 R.id.nav_cart -> {
-                    // Переход в корзину через NavController.
+                    // Navigate to cart via NavController.
                     binding.navHostFragment.visibility = View.VISIBLE
                     val navController = Navigation.findNavController(this, R.id.nav_host_fragment)
                     navController.navigate(R.id.cartFragment)
@@ -161,7 +161,7 @@ class MenuScreenActivity : AppCompatActivity() {
                 }
 
                 R.id.nav_favorites -> {
-                    // Переход к экрану избранного.
+                    // Navigate to favorites screen.
                     binding.navHostFragment.visibility = View.VISIBLE
                     val navController = Navigation.findNavController(this, R.id.nav_host_fragment)
                     navController.navigate(R.id.nav_favorites)
@@ -169,7 +169,7 @@ class MenuScreenActivity : AppCompatActivity() {
                 }
 
                 R.id.nav_notification -> {
-                    // Переход к экрану уведомлений.
+                    // Navigate to notifications screen.
                     binding.navHostFragment.visibility = View.VISIBLE
                     val navController = Navigation.findNavController(this, R.id.nav_host_fragment)
                     navController.navigate(R.id.nav_notification)
@@ -180,7 +180,7 @@ class MenuScreenActivity : AppCompatActivity() {
             }
         }
 
-        // Отслеживаем количество товаров в корзине и отображаем бейдж на иконке.
+        // Track cart item count and show badge on icon.
         lifecycleScope.launchWhenStarted {
             cartViewModel.cartSize.collect { size ->
                 val badge = binding.bottomNavigationView.getOrCreateBadge(R.id.nav_cart)
@@ -189,7 +189,7 @@ class MenuScreenActivity : AppCompatActivity() {
             }
         }
 
-        // Отслеживаем количество избранных и обновляем бейдж.
+        // Track favorite count and update badge.
         lifecycleScope.launchWhenStarted {
             cartViewModel.favoriteCount.collect { countFav ->
                 val badgeFav = binding.bottomNavigationView.getOrCreateBadge(R.id.nav_favorites)
@@ -198,7 +198,7 @@ class MenuScreenActivity : AppCompatActivity() {
             }
         }
 
-        // Отслеживаем количество непрочитанных уведомлений.
+        // Track unread notifications count.
         lifecycleScope.launchWhenStarted {
             notificationViewModel.unreadCount.collect { countNotif ->
                 val badgeNotif =
@@ -209,7 +209,7 @@ class MenuScreenActivity : AppCompatActivity() {
             }
         }
 
-        //Обработчик нажатия на конопку.Описание действий при выходе из аккаунта.
+        // Logout button handler. Describes actions when logging out.
         binding.logoutIcon.setOnClickListener {
             AlertDialog.Builder(this)
                 .setTitle("Exit")
@@ -220,12 +220,12 @@ class MenuScreenActivity : AppCompatActivity() {
         }
     }
 
-    // Метод onResume оставлен пустым — можно использовать для обновлений при возврате к экрану.
+    // onResume method left empty — can be used for updates when returning to the screen.
     override fun onResume() {
         super.onResume()
     }
 
-    //Навигация выхода из аккаунта.
+    // Logout navigation.
     private fun logout() {
         val authManager = AuthManager(this)
         authManager.clearSession()

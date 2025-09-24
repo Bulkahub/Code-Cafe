@@ -5,8 +5,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.cafeapp.repository.UsersRepository
 
 /**
- * Фабрика для создания UserViewModel с параметром UsersRepository.
- * Необходима, т.к. ViewModelProvider по умолчанию не поддерживает конструкторы с аргументами.
+ * Factory for creating UserViewModel with a UsersRepository parameter.
+ * Required because ViewModelProvider does not support constructors with arguments by default.
  */
 class UserViewModelFactory(private val userRepository: UsersRepository) :
     ViewModelProvider.Factory {

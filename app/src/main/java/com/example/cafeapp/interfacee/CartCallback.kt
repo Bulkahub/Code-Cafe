@@ -1,8 +1,8 @@
 package com.example.cafeapp.interfacee
 
-// TODO: Пока не используется. Планируется для системы уведомлений пользователю.
-// при изменении статуса заказа (например, "Заказ принят", "Кофе готов")
-// Может применяться во ViewModel или фрагменте уведомлений
+// TODO: Not used yet. Planned for the user notification system.
+// Will be triggered when the order status changes (e.g., "Order accepted", "Coffee is ready").
+// May be used in a ViewModel or notification fragment.
 interface OrderStatusCallback {
     fun onOrderStatusChanged()
 }

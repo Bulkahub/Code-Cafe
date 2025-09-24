@@ -7,13 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.cafeapp.R
 
-// Фрагмент, отвечающий за возвращение пользователя на главный экран (MenuScreenActivity).
+// Fragment responsible for returning the user to the main screen (MenuScreenActivity).
 class HomeFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Загружаем макет фрагмента, содержащий кнопку/элемент возврата на главную активити.
+        // Load the fragment layout containing the button/element to return to the main activity.
         return inflater.inflate(R.layout.fragment_home, container, false)
     }
 

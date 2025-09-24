@@ -2,7 +2,7 @@ package com.example.cafeapp.dataclass
 
 import java.util.UUID
 
-// Класс данных, описывающий уведомление в системе.
+// Data class describing a notification in the system.
 data class NotificationData(
     val id: String = UUID.randomUUID().toString(),
     val message: String,
@@ -10,7 +10,7 @@ data class NotificationData(
     val type: Type = Type.INFO,
     val isRead: Boolean = false
 ){
-    // Перечисление доступных типов уведомлений.
+    // Enumeration of available notification types.
     enum class Type{
         INFO,SUCCESS,ERROR
     }

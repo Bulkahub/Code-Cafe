@@ -23,7 +23,7 @@ class HomeScreenActivity : AppCompatActivity() {
             insets
         }
 
-        //Проверка авторизации: если пользователь уже вошел - переходим на экран меню.
+        // Authorization check: if the user is already logged in, navigate to the menu screen.
         val authManager = AuthManager(this)
         if (authManager.isLoggedIn()) {
             val intent = Intent(this, MenuScreenActivity::class.java)
@@ -32,7 +32,7 @@ class HomeScreenActivity : AppCompatActivity() {
             return
         }
 
-        //Обработка нажатия на кнопку начать - переход к экрану логина.
+        // Handling the "Get Started" button click — navigate to the login screen.
         val letsGetStartedButton = findViewById<Button>(R.id.buttonGetStarted)
         letsGetStartedButton.setOnClickListener {
             val intent = Intent(this, LoginScreenActivity::class.java)

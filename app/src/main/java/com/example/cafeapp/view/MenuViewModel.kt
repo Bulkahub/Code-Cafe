@@ -13,34 +13,34 @@ import kotlinx.coroutines.launch
 
 
 /**
- * ViewModel для экрана меню кофе.
- * Загружает данные из репозитория (локальный кэш или статичные данные),
- * формирует списки для отображения и обрабатывает фильтрацию.
+ * ViewModel for the coffee menu screen.
+ * Loads data from the repository (local cache or static data),
+ * builds display lists, and handles filtering.
  */
 class MenuViewModel(application: Application) : AndroidViewModel(application) {
 
-    // Источник данных (локальный кэш / заглушка).
+    // Data source (local cache / fallback).
     private val coffeRepository = CoffeRepository(application.applicationContext)
 
-    // LiveData для полного списка напитков.
+    // LiveData for the full list of drinks.
     private val _coffeList = MutableLiveData<List<CoffeItem>>()
     val coffeeList: LiveData<List<CoffeItem>> get() = _coffeList
 
-    // LiveData для отображения спецпредложения.
+    // LiveData for displaying special offers.
     private val _specialOfferList = MutableLiveData<List<CoffeItem>>()
     val specialOfferList: LiveData<List<CoffeItem>> get() = _specialOfferList
 
-    // LiveData для отфильтрованных позиций (поиск / категории).
+    // LiveData for filtered items (search / categories).
     private val _filteredList = MutableLiveData<List<CoffeItem>>()
     val filteredList: LiveData<List<CoffeItem>> get() = _filteredList
 
 
-    // Инициализация — загружаем данные при создании ViewModel.
+    // Initialization — load data when ViewModel is created.
     init {
         viewModelScope.launch {
-            val cacheData = coffeRepository.getCachedCoffeList()//Загружаем данные из спискка.
+            val cacheData = coffeRepository.getCachedCoffeList()// Load cached data.
 
-            // Статическое предложение.
+            // Static special offer.
             val specialOffers = listOf(
                 CoffeItem(
                     "Special Offer", "5 coffe beans\nfor you\n" +
@@ -48,7 +48,7 @@ class MenuViewModel(application: Application) : AndroidViewModel(application) {
                 )
             )
 
-            // Статичный список.
+            // Static list of drinks.
             val initialCoffeList = listOf(
                 CoffeItem(
                     "Cappuccino",
@@ -136,17 +136,17 @@ class MenuViewModel(application: Application) : AndroidViewModel(application) {
                 )
             )
 
-            // Загружаем данные в LiveData.
+            // Load data into LiveData.
             _coffeList.postValue(if (cacheData.isNotEmpty()) cacheData else initialCoffeList)
 
-            // Стартовый фильтр: "Cappuccino".
+            // Initial filter: "Cappuccino".
             _filteredList.postValue(initialCoffeList.filter {
                 it.name.contains(
                     "Cappuccino",
                     ignoreCase = true
                 )
             })
-            // Сохраняем спецпредложение.
+            // Save special offer.
             _specialOfferList.postValue(specialOffers)
 
         }
@@ -154,8 +154,8 @@ class MenuViewModel(application: Application) : AndroidViewModel(application) {
 
 
     /**
-     * Загружает актуальный список напитков из репозитория.
-     * После загрузки кэширует список локально и обновляет LiveData.
+     * Loads the current list of drinks from the repository.
+     * After loading, caches the list locally and updates LiveData.
      */
     fun loadCoffeList() {
         coffeRepository.getCoffeList { newCoffeList ->
@@ -173,8 +173,8 @@ class MenuViewModel(application: Application) : AndroidViewModel(application) {
 
 
     /**
-     * Показывает два напитка выбранного типа.
-     * Если нет второго изображения — добавляет другое, чтобы заполнить место.
+     * Displays two drinks of the selected type.
+     * If a second image is missing — adds another to fill the space.
      */
     fun showCoffeType(type: String) {
         val allCoffe = _coffeList.value ?: emptyList()
@@ -192,8 +192,8 @@ class MenuViewModel(application: Application) : AndroidViewModel(application) {
 
 
     /**
-     * Выполняет поиск по названию напитка.
-     * Специальные предложения остаются нетронутыми в другом списке.
+     * Performs a search by drink name.
+     * Special offers remain untouched in a separate list.
      */
     fun filterCoffe(query: String) {
         _filteredList.postValue(_coffeList.value?.filter {

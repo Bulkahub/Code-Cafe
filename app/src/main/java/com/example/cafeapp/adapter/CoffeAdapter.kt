@@ -11,27 +11,27 @@ import com.example.cafeapp.databinding.ItemSpecialOfferBinding
 import com.example.cafeapp.dataclass.CoffeItem
 import com.example.cafeapp.navigationkeys.NavigationKeys
 
-// Адаптер для отображения списка кофе и спецпредложений.
+// Adapter for displaying the list of coffee items and special offers.
 class CoffeAdapter(
     private val coffeList: MutableList<CoffeItem> = mutableListOf(),
-    private val cartList: MutableList<CoffeItem>,// Список товаров, уже добавленных в корзину.
-    private val onAddClick: (CoffeItem) -> Unit // Callback при нажатии на иконку "добавить".
+    private val cartList: MutableList<CoffeItem>,// List of items already added to the cart.
+    private val onAddClick: (CoffeItem) -> Unit // Callback when the "add" icon is clicked.
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
-        private const val VIEW_TYPE_COFFEE = 0   // Тип обычной позиции.
-        private const val VIEW_TYPE_SPECIAL = 1   // Тип спецпредложения.
+        private const val VIEW_TYPE_COFFEE = 0   // Regular item type.
+        private const val VIEW_TYPE_SPECIAL = 1    // Special offer item type.
     }
 
-    // Отфильтрованный список, отображаемый в RecyclerView.
+    // Filtered list displayed in the RecyclerView.
     private var filteredList = coffeList.toMutableList()
 
-    // Возвращаем тип элемента — используется для выбора ViewHolder.
+    // Return item type — used to choose the appropriate ViewHolder.
     override fun getItemViewType(position: Int): Int {
         return if (filteredList[position].name == "Special Offer") VIEW_TYPE_SPECIAL else VIEW_TYPE_COFFEE
     }
 
-    // Создаём соответствующий ViewHolder в зависимости от типа элемента.
+    // Create the appropriate ViewHolder depending on the item type.
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == VIEW_TYPE_SPECIAL) {
             val binding =
@@ -44,7 +44,7 @@ class CoffeAdapter(
         }
     }
 
-    // Привязываем данные к ViewHolder в зависимости от типа.
+    // Bind data to the ViewHolder depending on the item type.
     override fun onBindViewHolder(
         holder: RecyclerView.ViewHolder,
         position: Int
@@ -56,33 +56,33 @@ class CoffeAdapter(
         }
     }
 
-    // Количество отображаемых элементов.
+    // Number of items displayed.
     override fun getItemCount() = filteredList.size
 
-    // ViewHolder для обычных позиций кофе.
+    // ViewHolder for regular coffee items.
     inner class CoffeViewHolder(private val binding: ItemCoffeBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: CoffeItem) {
-            // Привязываем данные к UI.
+            // Bind data to UI.
             binding.textViewCofeeName.text = item.name
             binding.textViewCofFeMilk.text = item.milkType
             binding.textViewPrice.text = item.price
             binding.imageViewCoffe.setImageResource(item.imageRecId)
 
-            // Меняем прозрачность кнопки добавления, если уже в корзине.
+            // Adjust add button transparency if item is already in the cart.
             if (cartList.contains(item)) {
                 binding.imageViewAdd.animate().alpha(0.5f).setDuration(300)
             } else {
                 binding.imageViewAdd.animate().alpha(1.0f).setDuration(300)
             }
 
-            // Обработка клика по иконке добавления.
+            // Handle click on the add icon.
             binding.imageViewAdd.setOnClickListener {
                 onAddClick(item)
-                notifyItemChanged(adapterPosition) // Обновляем текущую позицию.
+                notifyItemChanged(adapterPosition) // Refresh current position.
 
-                // Переход к подробной информации о кофе.
+                // Navigate to detailed coffee information.
                 val intent = Intent(itemView.context, CoffeItemActivity::class.java).apply {
                     putExtra(NavigationKeys.NAME, item.name)
                     putExtra(NavigationKeys.IMAGE, item.imageRecId)
@@ -95,7 +95,7 @@ class CoffeAdapter(
         }
     }
 
-    // ViewHolder для блока спецпредложения.
+    // ViewHolder for the special offer block.
     inner class SpecialOfferViewHolder(private val binding: ItemSpecialOfferBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: CoffeItem) {
@@ -104,7 +104,7 @@ class CoffeAdapter(
         }
     }
 
-    // Метод для фильтрации списка кофе.
+    // Method for filtering the coffee list.
     fun filter(query: String) {
         filteredList =
             coffeList.filter {
@@ -116,15 +116,15 @@ class CoffeAdapter(
         notifyDataSetChanged()
     }
 
-    // Обновляем отображаемый список кофе и уведомляем адаптер об изменениях.
+    // Update the displayed coffee list and notify the adapter of changes.
     fun updateData(newList: List<CoffeItem>) {
-        if (newList.isEmpty()) return // Пропускаем пустые обновления.
+        if (newList.isEmpty()) return // Skip empty updates.
 
-        // Очищаем предыдущие данные и добавляем новые.
+        // Clear previous data and add new items.
         filteredList.clear()
         filteredList.addAll(newList)
 
-        // Уведомляем адаптер о полном обновлении данных.
+        // Notify adapter of full data refresh.
         notifyDataSetChanged()
     }
 }

@@ -24,7 +24,7 @@ class CreateAccountScreenActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-        //Инициализация привязки к макету.
+        // Initialization of layout binding.
         binding = DataBindingUtil.setContentView(this, R.layout.activity_create_account_screen)
 
         val userRepository = UsersRepository(applicationContext)
@@ -33,14 +33,14 @@ class CreateAccountScreenActivity : AppCompatActivity() {
 
         viewModel = ViewModelProvider(this, factory)[UserViewModel::class.java]
 
-        //Обработчик кнопки "Создать аккаунт".
+        // Handler for the "Create Account" button.
         binding.buttonCreateAccount.setOnClickListener {
             val userName = binding.createName.text.toString()
             val password = binding.createPassword.text.toString()
 
-            //Проверяем,что все поля не пустые.
+            // Check that all fields are not empty.
             if (userName.isNotEmpty() && password.isNotEmpty()) {
-                viewModel.registerUser(userName, password)//Регистрируем пользователя.
+                viewModel.registerUser(userName, password)// Register the user.
             } else {
                 Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show()
             }

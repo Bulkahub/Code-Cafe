@@ -13,22 +13,22 @@ import kotlinx.serialization.json.Json
 import javax.inject.Inject
 
 
-/** Репозиторий для управления данными корзины пользователя через DataStore.*/
+/** Repository for managing user's cart data via DataStore.*/
 class CartRepository @Inject constructor(private val dataStore: DataStore<Preferences>) {
 
     companion object {
-        // Ключ для хранения списка товаров в корзине в формате JSON.
+        // Key for storing the cart item list in JSON format.
         val CART_KEY = stringPreferencesKey("cart_items")
     }
 
-    // Поток корзины: считываем данные из DataStore и декодируем их из JSON в список объектов CartItem.
+    // Cart flow: read data from DataStore and decode it from JSON into a list of CartItem objects.
     val cartItems: Flow<List<CartItem>> = dataStore.data.map { preferences ->
-        val json = preferences[CART_KEY] ?: "[]" // Если данных нет — возвращаем пустой список.
+        val json = preferences[CART_KEY] ?: "[]" // If no data — return an empty list.
         Json.decodeFromString(ListSerializer(CartItem.serializer()), json)
 
     }
 
-    // Сохраняем список товаров в корзине: сериализуем в JSON и записываем в DataStore.
+    // Save the list of cart items: serialize to JSON and write to DataStore.
     suspend fun saveCart(items: List<CartItem>) {
         val json = Json.encodeToString(items)
         dataStore.edit { prefs ->
@@ -36,7 +36,7 @@ class CartRepository @Inject constructor(private val dataStore: DataStore<Prefer
         }
     }
 
-    // Очищаем корзину: удаляем соответствующий ключ из DataStore.
+    // Clear the cart: remove the corresponding key from DataStore.
     suspend fun clearCart() {
         dataStore.edit { prefs ->
             prefs.remove(CART_KEY)

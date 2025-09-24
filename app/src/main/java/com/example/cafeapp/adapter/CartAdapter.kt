@@ -11,40 +11,40 @@ import com.example.cafeapp.R
 import com.example.cafeapp.dataclass.CartItem
 import com.example.cafeapp.databinding.CartItemBinding
 
-// Перечисление для определения режима отображения: корзина или избранное.
+// Enumeration to define display mode: cart or favorites.
 enum class DisplayMode {
     CART,
     FAVORITE
 }
 
-// Адаптер для отображения элементов корзины или избранного в RecyclerView.
+// Adapter for displaying cart or favorite items in RecyclerView.
 class CartAdapter(
-    private val onFavoriteClick: ((CartItem) -> Unit)? = null, // Коллбэк при нажатии на иконку "избранное".
-    private val onRemoveClick: ((CartItem) -> Unit)? = null, // Коллбэк для удаления товара.
-    private val mode: DisplayMode = DisplayMode.CART // Режим отображения по умолчанию — корзина.
+    private val onFavoriteClick: ((CartItem) -> Unit)? = null, // Callback when the "favorite" icon is clicked.
+    private val onRemoveClick: ((CartItem) -> Unit)? = null, // Callback for removing an item.
+    private val mode: DisplayMode = DisplayMode.CART // Default display mode — cart.
 ) :
-    ListAdapter<CartItem, CartAdapter.CartViewHolder>(CartDiffCallback) { // Используем DiffUtil для оптимизации обновлений.
+    ListAdapter<CartItem, CartAdapter.CartViewHolder>(CartDiffCallback) { // Using DiffUtil for efficient updates.
 
-    // ViewHolder — связывает данные из CartItem с layout-элементами.
+    // ViewHolder — binds CartItem data to layout elements.
     inner class CartViewHolder(private val binding: CartItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
 
-        // Метод привязки данных CartItem к элементам интерфейса.
+        // Method to bind CartItem data to UI elements.
         fun bind(item: CartItem) {
             binding.textViewCartName.text = item.name
             binding.textViewCartSize.text = "Size: ${item.size}"
             binding.textViewCartPrice.text = item.price
             binding.imageViewCart.setImageResource(item.image)
 
-            // Обработка кликов в зависимости от режима: корзина или избранное.
+            // Handle clicks depending on the mode: cart or favorites.
             when (mode) {
                 DisplayMode.CART -> {
                     binding.heartFavorite.setImageResource(R.drawable.heartcartitem)
                     binding.heartFavorite.setOnClickListener {
                         onFavoriteClick?.invoke(item)
                     }
-                    // Кнопка очистки — удаление из корзины.
+                    // Clear button — removes item from cart.
                     binding.clearCoffe.setOnClickListener {
                         onRemoveClick?.invoke(item)
                     }
@@ -56,7 +56,7 @@ class CartAdapter(
                     binding.heartFavorite.setOnClickListener {
                         onRemoveClick?.invoke(item)
                     }
-                    // Кнопка удаления из корзины скрыта.
+                    // Hide the remove-from-cart button.
                     binding.clearCoffe.visibility = View.GONE
                     binding.clearCoffe.setOnClickListener(null)
                 }
@@ -64,7 +64,7 @@ class CartAdapter(
         }
     }
 
-    // Объект для сравнения элементов списка — оптимизация через DiffUtil.
+    // Object for comparing list items — optimized via DiffUtil.
     object CartDiffCallback : DiffUtil.ItemCallback<CartItem>() {
         override fun areItemsTheSame(
             oldItem: CartItem,
@@ -73,7 +73,7 @@ class CartAdapter(
             return oldItem.id == newItem.id
         }
 
-        // Сравниваем содержимое — если всё одинаково, перерисовка не требуется.
+        // Compare contents — if identical, no need to redraw.
         override fun areContentsTheSame(
             oldItem: CartItem,
             newItem: CartItem
@@ -88,7 +88,7 @@ class CartAdapter(
 
     }
 
-    // Создаём ViewHolder, используя layout для элемента корзины.
+    // Create ViewHolder using the layout for cart item.
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -97,7 +97,7 @@ class CartAdapter(
         return CartViewHolder(binding)
     }
 
-    // Передаём данные в конкретный ViewHolder.
+    // Pass data to the specific ViewHolder.
     override fun onBindViewHolder(
         holder: CartViewHolder,
         position: Int

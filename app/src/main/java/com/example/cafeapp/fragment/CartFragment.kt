@@ -18,15 +18,15 @@ import com.example.cafeapp.adapter.DisplayMode
 import com.example.cafeapp.dataclass.CartItem
 import com.example.cafeapp.view.CartViewModel
 
-/** Фрагмент, отображающий содержимое корзины пользователя.*/
+/** Fragment displaying the contents of the user's cart.*/
 class CartFragment : Fragment() {
 
-    // Получаем доступ к общей ViewModel через activityViewModels (поддержка shared state между фрагментами).
+    // Access shared ViewModel via activityViewModels (supports shared state between fragments).
     private val cartViewModel by activityViewModels<CartViewModel>()
-    private lateinit var recyclerView: RecyclerView //Список оваров в корзине.
-    private lateinit var cartAdapter: CartAdapter   // Адаптер для отображения элементов корзины.
+    private lateinit var recyclerView: RecyclerView // List of items in the cart.
+    private lateinit var cartAdapter: CartAdapter   // Adapter for displaying cart items.
 
-    // Внутренний список, может использоваться при необходимости локального кеша.
+    // Internal list, can be used for local caching if needed.
     private val cartList = mutableListOf<CartItem>()
 
 
@@ -42,7 +42,7 @@ class CartFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Инициализация RecyclerView и установка менеджера с 2 колонками.
+        // Initialize RecyclerView and set layout manager with 2 columns.
         recyclerView = view.findViewById(R.id.recyclerViewCart)
         recyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
         recyclerView.visibility = View.GONE
@@ -51,8 +51,8 @@ class CartFragment : Fragment() {
         recyclerView.visibility = View.GONE
         progressBar.visibility = View.VISIBLE
 
-        // Инициализация адаптера для отображения товаров в корзине.
-        //   → товар добавляется в список избранных через cartViewModel.addToFavorites()
+        // Initialize adapter for displaying cart items.
+        //   → item is added to favorites via cartViewModel.addToFavorites()
         cartAdapter = CartAdapter(
             onFavoriteClick = { item ->
                 cartViewModel.addToFavorites(item)
@@ -69,12 +69,12 @@ class CartFragment : Fragment() {
         recyclerView.adapter = cartAdapter
 
 
-        // Отслеживание изменений списка корзины.
+        // Observe changes in the cart item list.
         lifecycleScope.launchWhenStarted {
             cartViewModel.cartItems.collect { cartItems ->
-                cartAdapter.submitList(cartItems) // Обновляем адаптер с новым списком товаров (DiffUtil).
+                cartAdapter.submitList(cartItems) // Update adapter with new item list (DiffUtil).
 
-                // Управление видимостью: если список пуст — показываем прогрессбар, иначе — список.
+                // Manage visibility: show progress bar if list is empty, otherwise show list.
                 recyclerView.visibility = if (cartItems.isEmpty()) View.GONE else View.VISIBLE
                 progressBar.visibility = if (cartItems.isEmpty()) View.VISIBLE else View.GONE
 
@@ -82,8 +82,3 @@ class CartFragment : Fragment() {
         }
     }
 }
-
-
-
-
-

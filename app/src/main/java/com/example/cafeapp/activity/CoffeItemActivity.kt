@@ -18,55 +18,55 @@ import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-//Экран с подробным описанием выбраноного кофе и выбором его размера.
+// Screen with detailed description of the selected coffee and size selection.
 @AndroidEntryPoint
 class CoffeItemActivity : AppCompatActivity() {
-    // Переменная для блокировки повторных нажатий на кнопку выбора.
+    // Variable to prevent repeated clicks on the selection button.
     private var buttonClicked = false
 
-    // ViewModel для взаимодействия с корзиной
+    // ViewModel for interacting with the cart.
     private val cartViewModel: CartViewModel by viewModels()
 
-    // ViewModel для управления уведомлениями.
+    // ViewModel for managing notifications.
     private val notificationViewModel: NotificationViewModel by viewModels()
 
-    // ViewBinding для доступа к UI-элементам
+    // ViewBinding for accessing UI elements.
     private lateinit var binding: ActivityCoffeItemActvityBinding
 
-    // Данные о кофе, полученные из Intent
+    // Coffee data received from Intent.
     private var coffeName: String? = null
     private var coffeImage: Int = -1
-    private var coffeePrice: String = "0"//Знач. по умолчанию если не выставлено.
+    private var coffeePrice: String = "0"// Default value if not set.
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-        // Инициализация ViewBinding.
+        // Initializing ViewBinding.
         binding = ActivityCoffeItemActvityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Получаем название кофе из Intent. Есть лишний вызов, но он будет переопределён ниже.
+        // Getting coffee name from Intent. There's a redundant call, but it will be overridden below.
         coffeName = intent.getStringExtra("coffee_name") ?: "No name"
 
-        // Извлекаем данные о кофе из Intent.
+        // Extracting coffee data from Intent.
         coffeName = intent.getStringExtra(NavigationKeys.NAME)
         coffeImage = intent.getIntExtra(NavigationKeys.IMAGE, -1)
         coffeePrice = intent.getStringExtra(NavigationKeys.PRICE) ?: "0"
         val coffeDescription = intent.getStringExtra(NavigationKeys.DESCRIPTION)
 
-        // Отображаем описание и название кофе в UI.
+        // Displaying coffee description and name in the UI.
         binding.thoughtsTextViewDescription.text = coffeDescription
         binding.textViewCardViewCoffeItem.text = coffeName
 
 
-        // Обработка выбора размера кофе.
+        // Handling coffee size selection.
         binding.materialButtonS.setOnClickListener { handleSelection("S") }
         binding.materialButtonM.setOnClickListener { handleSelection("M") }
         binding.materialButtonL.setOnClickListener { handleSelection("L") }
     }
 
-    // Создаёт объект CartItem с выбранным размером и переданными параметрами.
+    // Creates a CartItem object with the selected size and provided parameters.
     private fun makeCartItem(size: String): CartItem {
         return CartItem(
             id = UUID.randomUUID().toString(),
@@ -78,27 +78,27 @@ class CoffeItemActivity : AppCompatActivity() {
         )
     }
 
-    // Обрабатывает выбор размера кофе: добавляет в корзину, создаёт уведомление и закрывает экран.
+    // Handles coffee size selection: adds to cart, creates notifications, and closes the screen.
     private fun handleSelection(size: String) {
         if (buttonClicked) return
         buttonClicked = true
 
         val item = makeCartItem(size)
         notificationViewModel.notifyNow(
-            "Ваш кофе размера $size готовится!",
+            "Your coffee size $size is being prepared!",
             NotificationData.Type.INFO
         )
         notificationViewModel.notifyLater(
-            "Ваш кофе готов! Заберите у бариста.", delayMillis = 10000,
+            "Your coffee is ready! Pick it up from the barista.", delayMillis = 10000,
             NotificationData.Type.SUCCESS
         )
 
-        // Добавляем товар в корзину и переходим обратно на главный экран.
+        // Adds the item to the cart and returns to the main screen.
         lifecycleScope.launch {
             cartViewModel.addToCart(item)
             delay(150)
 
-            // Переход на MenuScreenActivity с флагом открытия корзины.
+            // Navigates to MenuScreenActivity with a flag to open the cart.
             val intent = Intent(this@CoffeItemActivity, MenuScreenActivity::class.java).apply {
                 flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
                 putExtra("open_cart", true)

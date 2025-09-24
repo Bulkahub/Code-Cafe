@@ -9,16 +9,16 @@ import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-/** Репозиторий для загрузки списка напитков и управления их кэшированием через SharedPreference.*/
+/**Repository for loading the list of drinks and managing their caching via SharedPreferences.*/
 class CoffeRepository(private val context: Context) {
 
-    // Локальное хранилище для кэширования списка напитков.
+    // Local storage for caching the list of drinks.
     private val sharedPreferences =
         context.getSharedPreferences("CaffeAppPref", Context.MODE_PRIVATE)
 
 
     /**
-     * Загружает список напитков из статического источника (эмуляция Firebase) и возвращает его через колбэк.*/
+     * Loads the list of drinks from a static source (simulating Firebase) and returns it via callback.*/
     fun getCoffeList(callback: (List<CoffeItem>) -> Unit) {
         val coffeList = listOf(
             CoffeItem(
@@ -110,23 +110,23 @@ class CoffeRepository(private val context: Context) {
     }
 
     /**
-     * Кэширует список напитков, сохраняя его в SharedPreferences в JSON-формате.
-     * Выполняется в фоновом потоке (IO Dispatcher).
+     * Caches the list of drinks by saving it to SharedPreferences in JSON format.
+     * Executed on a background thread (IO Dispatcher).
      */
     suspend fun cacheCoffeList(coffeList: List<CoffeItem>) {
-        withContext(Dispatchers.IO) {//Фоновый поток для сохранения данных.
+        withContext(Dispatchers.IO) {// Background thread for saving data.
             val json = Gson().toJson(coffeList)
             sharedPreferences.edit().putString("cachedCoffeeList", json).apply()
         }
     }
 
     /**
-     * Получает кэшированный список напитков из SharedPreferences.
-     * Если данные отсутствуют — возвращает пустой список.
-     * Выполняется в фоновом потоке (IO Dispatcher).
+     * Retrieves the cached list of drinks from SharedPreferences.
+     * Returns an empty list if no data is found.
+     * Executed on a background thread (IO Dispatcher).
      */
     suspend fun getCachedCoffeList(): List<CoffeItem> {
-        return withContext(Dispatchers.IO) {//Получаем данные в фоновом режиме.
+        return withContext(Dispatchers.IO) {// Retrieve data in background.
             val json = sharedPreferences.getString("cachedCoffeeList", null)
                 ?: return@withContext emptyList()
             val type = object : TypeToken<List<CoffeItem>>() {}.type

@@ -31,7 +31,7 @@ class LoginScreenActivity : AppCompatActivity() {
 
 
 
-        //Инициализация привязки к макету .
+        // Initialization of layout binding.
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login_screen)
 
 
@@ -44,7 +44,7 @@ class LoginScreenActivity : AppCompatActivity() {
 
         viewModel = ViewModelProvider(this, factory)[UserViewModel::class.java]
 
-        //Переход на экран создания аккаунта.
+        // Navigate to the account creation screen.
         textViewCreateAccount = findViewById(R.id.createAccountTextView)
         textViewCreateAccount.setOnClickListener {
             val intent = Intent(this, CreateAccountScreenActivity::class.java)
@@ -52,7 +52,7 @@ class LoginScreenActivity : AppCompatActivity() {
         }
 
 
-        //Обработчик кнопки входа.
+        // Handler for the login button.
         binding.buttonLogin.setOnClickListener {
             viewModel.login(
                 binding.loginUserName.text.toString().trim(),
@@ -61,7 +61,7 @@ class LoginScreenActivity : AppCompatActivity() {
         }
 
 
-        //Следим за статусом авторизации.
+        // Observe login status.
         viewModel.loginStatus.observe(this) { success ->
             if (success) {
                 val userId = viewModel.getUserId()
@@ -75,7 +75,7 @@ class LoginScreenActivity : AppCompatActivity() {
                 startActivity(intent)
                 finish()
                 }else{
-                    Log.w("LoginFlow", "userId is null — возможно, ещё не успел обновиться")
+                    Log.w("LoginFlow", "userId is null — might not be updated yet")
                 }
             } else {
                 Toast.makeText(this, "Login Failed", Toast.LENGTH_SHORT).show()

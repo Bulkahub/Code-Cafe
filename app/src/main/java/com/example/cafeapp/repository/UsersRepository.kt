@@ -6,30 +6,30 @@ import com.example.cafeapp.authmanager.AuthManager
 import com.google.firebase.firestore.FirebaseFirestore
 
 /**
- * Репозиторий, отвечающий за регистрацию и авторизацию пользователей.
- * Хранит учетные данные в Firestore и сохраняет ID текущего пользователя в SharedPreferences.
+ * Repository responsible for user registration and authentication.
+ * Stores credentials in Firestore and saves the current user's ID in SharedPreferences.
  */
 class UsersRepository(private val context: Context) {
 
-    // Подключение к Firestore и локальному хранилищу настроек.
+    // Connection to Firestore and local preferences storage.
     private val firestore = FirebaseFirestore.getInstance()
     private val sharedPreferences =
         context.getSharedPreferences("CaffeAppPref", Context.MODE_PRIVATE)
 
 
     /**
-     * Регистрирует нового пользователя:
-     * - Проверяет валидность полей
-     * - Генерирует уникальный userId
-     * - Сохраняет данные пользователя в Firestore
-     * - Локально сохраняет userId текущего пользователя
+     * Registers a new user:
+     * - Validates input fields
+     * - Generates a unique userId
+     * - Saves user data to Firestore
+     * - Locally stores the current user's userId
      *
-     * @param userName имя пользователя
-     * @param password пароль
-     * @param callback результат операции (успех/ошибка + сообщение)
+     * @param userName the username
+     * @param password the password
+     * @param callback result of the operation (success/failure + message)
      */
     fun createAccount(userName: String, password: String, callback: (Boolean, String) -> Unit) {
-        //Проверка,что поля не пустые и пароль достаточно длинный.
+        // Check that fields are not empty and password is long enough.
         if (userName.isBlank() || password.isBlank()) {
             callback(false, "Invalid input")
             return
@@ -39,19 +39,19 @@ class UsersRepository(private val context: Context) {
             return
         }
 
-        // Генерация уникального ID и формирование данных пользователя.
-        val userId = firestore.collection("Users").document().id//Генерируем id заранее.
+        // Generate unique ID and prepare user data.
+        val userId = firestore.collection("Users").document().id// Pre-generate ID.
         val userMap = hashMapOf(
             "userId" to userId,
             "userName" to userName.trim(),
             "password" to password.trim()
         )
 
-        // Сохраняем пользователя в Firestore.
+        // Save user to Firestore.
         firestore.collection("Users").document(userId)
-            .set(userMap)//Используем set() с фиксированным id.
+            .set(userMap)// Use set() with fixed ID.
             .addOnSuccessListener {
-                // Успешная регистрация — сохраняем ID в SharedPreferences.
+                // Successful registration — save ID to SharedPreferences.
                 sharedPreferences.edit().putString("loggedInUser", userId).apply()
                 callback(true, "Account created successfully")
             }
@@ -61,18 +61,18 @@ class UsersRepository(private val context: Context) {
     }
 
     /**
-     * Пытается выполнить вход по имени и паролю:
-     * - Проверяет что поля не пустые
-     * - Ищет пользователя по имени
-     * - Сравнивает пароль
-     * - Сохраняет ID в SharedPreferences при успехе
+     * Attempts to log in using username and password:
+     * - Validates that fields are not empty
+     * - Searches for user by username
+     * - Compares password
+     * - Saves ID to SharedPreferences on success
      *
-     * @param userName имя пользователя
-     * @param password пароль
-     * @param callback результат (успех/ошибка + сообщение)
+     * @param userName the username
+     * @param password the password
+     * @param callback result (success/failure + message)
      */
     fun login(userName: String, password: String, callback: (Boolean, String?) -> Unit) {
-        //Проверка что поля не пустые
+        // Check that fields are not empty.
         if (userName.isBlank() || password.isBlank()) {
             callback(false, null)
             return

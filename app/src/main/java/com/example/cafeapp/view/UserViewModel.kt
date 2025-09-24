@@ -8,30 +8,30 @@ import com.example.cafeapp.authmanager.AuthManager
 import com.example.cafeapp.repository.UsersRepository
 import kotlin.math.PI
 
-/**ViewModel следит за статусом входа
- * Связывает UI с UsersRepository и предоставляет LiveData для отслеживания**/
+/**ViewModel monitors login status.
+ * Connects the UI with UsersRepository and provides LiveData for tracking.**/
 class UserViewModel(private val userRepository: UsersRepository) : ViewModel() {
 
-    // Результат регистрации (true — успешно, false — ошибка).
+    // Registration result (true — success, false — failure).
     private val _registrationStatus = MutableLiveData<Boolean>()
     val registrationStatus: LiveData<Boolean> get() = _registrationStatus
 
-    // Результат входа (true — успешно, false — ошибка).
+    // Login result (true — success, false — failure).
     private val _loginStatus = MutableLiveData<Boolean>()
     val loginStatus: LiveData<Boolean> get() = _loginStatus
 
-    // Сообщение об ошибке (если вход или регистрация завершились неудачно).
+    // Error message (if login or registration failed).
     private val _errorMessage = MutableLiveData<String>()
     val errorMessage: LiveData<String> get() = _errorMessage
 
-    //Id текущего пользователя.Если вход выполнен успешно.
+    // ID of the current user. Set if login is successful.
     var currentUserId: String? = null
         private set
 
 
     /**
-     * Вызывает вход пользователя через репозиторий.
-     * При неудаче устанавливает сообщение ошибки.
+     * Triggers user login via the repository.
+     * Sets error message on failure.
      */
     fun login(userName: String, password: String) {
         userRepository.login(userName, password) { success, userId ->
@@ -46,14 +46,14 @@ class UserViewModel(private val userRepository: UsersRepository) : ViewModel() {
         }
     }
 
-    //Возвращает Id текущего пользователя.
+    // Returns the current user's ID.
     fun getUserId(): String? {
         return currentUserId
     }
 
     /**
-     * Регистрирует нового пользователя через репозиторий.
-     * При неудаче сохраняет сообщение ошибки.
+     * Registers a new user via the repository.
+     * Stores error message on failure.
      */
     fun registerUser(userName: String, password: String) {
         userRepository.createAccount(userName, password) { success, message ->
